@@ -20,6 +20,7 @@ import javax.swing.JSeparator;
  */
 public class QuestionInputTemplate extends JFrame {
 	
+	private JTextField quiztitleTextField;
 	private JTextField titleTextField;
 	private JTextField optionATextField;
 	private JTextField optionBTextField;
