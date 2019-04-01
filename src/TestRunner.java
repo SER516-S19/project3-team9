@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 /**
@@ -18,14 +20,20 @@ public class TestRunner {
         f.setVisible(true);
         QuizReader reader = new QuizReader();
         QuizList list = new QuizList();
-
-        QuestionAttemptTemplate q = new QuestionAttemptTemplate(f);
-        QuizChecker checker = new QuizChecker(reader,list,q);
-        if(q.showQuestion(new QuestionStub())){
-            System.out.println("Correct Answer !");
-        }
-        else
-            System.out.println("Wrong Answer !");
+       // SelectQuizTitle title = new SelectQuizTitle(f);
+        QuestionAttemptTemplate template = new QuestionAttemptTemplate(f);
+        ArrayList<QuestionStub> q = new ArrayList<QuestionStub>();
+        q.add(new QuestionStub());
+        QuestionStub s2 = new QuestionStub();
+        s2.option1 = "1";
+        s2.option2 = "2";
+        s2.option3 = "3";
+        s2.option4 = "4";
+        s2.correctOption = 1;
+        q.add(s2);
+        q.add(new QuestionStub());
+        QuizChecker checker = new QuizChecker(template,q);
+        checker.tryQuestions();
     }
 
 }
