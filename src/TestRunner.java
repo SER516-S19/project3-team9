@@ -20,7 +20,7 @@ public class TestRunner {
         f.setVisible(true);
         QuizReader reader = new QuizReader();
         QuizList list = new QuizList();
-       // SelectQuizTitle title = new SelectQuizTitle(f);
+        SelectQuizTitle title = new SelectQuizTitle(f);
         QuestionAttemptTemplate template = new QuestionAttemptTemplate(f);
         ArrayList<QuestionStub> q = new ArrayList<QuestionStub>();
         q.add(new QuestionStub());
