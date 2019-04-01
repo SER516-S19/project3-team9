@@ -1,18 +1,24 @@
 package view;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
+
+import model.Question;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Form to show place to create a quiz with questions
@@ -40,9 +46,13 @@ public class QuestionInputTemplate extends JFrame {
 	private JTextArea optionCTextArea;
 	private JTextArea optionDTextArea;
 	
+	private ArrayList<Question> questions;
+	
 	private static final String FRAME_TITLE = "Quiz Monster";
 
 	public QuestionInputTemplate() {
+		
+		questions = new ArrayList<Question>();
 		
 		this.setTitle(FRAME_TITLE);
 		
@@ -59,54 +69,82 @@ public class QuestionInputTemplate extends JFrame {
 		setupSeperator(contentPane);
 	}
 	
+	/**
+	 * Need Implemented function.
+	 */
+	private void storeThisQuestion(Question question) {
+		System.out.println("Store the input into question then store in ArrayList.");
+	}
+	
+	private void writeQuizToFilePath(String path) {
+		System.out.println("Store/quiz/somewhere/as/json/string.");
+	}
+	
 	private void setupTextArea(JPanel contentPane) {
 		
 		questionTextArea = new JTextArea();
+		questionTextArea.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		questionTextArea.setBounds(19, 84, 662, 68);
 		questionTextArea.setLineWrap(true);
 		contentPane.add(questionTextArea);
 		
 		optionATextArea = new JTextArea();
+		optionATextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionATextArea.setBounds(19, 199, 662, 44);
 		optionATextArea.setLineWrap(true);
 		contentPane.add(optionATextArea);
 		
 		optionBTextArea = new JTextArea();
+		optionBTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionBTextArea.setBounds(19, 294, 662, 44);
 		optionBTextArea.setLineWrap(true);
 		contentPane.add(optionBTextArea);
 		
 		optionCTextArea = new JTextArea();
+		optionCTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionCTextArea.setBounds(19, 394, 662, 44);
 		optionCTextArea.setLineWrap(true);
 		contentPane.add(optionCTextArea);
 		
 		optionDTextArea = new JTextArea();
+		optionDTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionDTextArea.setBounds(19, 485, 662, 44);
 		optionDTextArea.setLineWrap(true);
 		contentPane.add(optionDTextArea);
 	}
 	
 	private void setupLabel(JPanel contentPane) {
+		
 		JLabel questionNumerLabel = new JLabel("Question 1.");
 		questionNumerLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		questionNumerLabel.setBounds(19, 61, 678, 16);
 		contentPane.add(questionNumerLabel);
 		
-		JLabel titleLabel = new JLabel("Fake Midterm");
+		JLabel titleLabel = new JLabel("Fake Midterm(set by previous page.)");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		titleLabel.setBounds(19, 6, 132, 43);
+		titleLabel.setBounds(19, 6, 662, 43);
 		contentPane.add(titleLabel);
 	} 
 	
 	private void setupButton(JPanel contentPane) {
-		JButton createButton = new JButton("Create");
-		createButton.setBounds(577, 543, 117, 29);
-		contentPane.add(createButton);
 		
 		JButton addMoreButton = new JButton("Add More Question");
+		addMoreButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				storeThisQuestion(null);
+			}
+		});
 		addMoreButton.setBounds(385, 543, 180, 29);
 		contentPane.add(addMoreButton);
+		
+		JButton createButton = new JButton("Create");
+		createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				writeQuizToFilePath("Hello");
+			}
+		});
+		createButton.setBounds(577, 543, 117, 29);
+		contentPane.add(createButton);
 		
 		JRadioButton optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
@@ -133,6 +171,7 @@ public class QuestionInputTemplate extends JFrame {
 	} 
 	
 	private void setupSeperator(JPanel contentPane) {
+		
 		JSeparator seperatorAB = new JSeparator();
 		seperatorAB.setBounds(6, 255, 688, 12);
 		contentPane.add(seperatorAB);
