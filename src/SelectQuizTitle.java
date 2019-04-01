@@ -8,16 +8,7 @@ import java.awt.Component;
 
 public class SelectQuizTitle {
 
-	public static void main(String[] args) {
-		SelectQuizTitle object = new SelectQuizTitle();
-	}
-	SelectQuizTitle(){
-
-		JFrame quiz = new JFrame("Quiz");
-		quiz.setVisible(true);
-		quiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		quiz.setSize(500, 500);
-		quiz.setLocation(430, 100);
+	SelectQuizTitle(JFrame quiz){
 
 		JPanel quizpanel = new JPanel();
 		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS)); 
