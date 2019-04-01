@@ -12,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 
 /**
  * Form to show place to create a quiz with questions
@@ -20,13 +21,6 @@ import javax.swing.JSeparator;
  */
 public class QuestionInputTemplate extends JFrame {
 	
-	private JTextField quiztitleTextField;
-	private JTextField titleTextField;
-	private JTextField optionATextField;
-	private JTextField optionBTextField;
-	private JTextField optionCTextField;
-	private JTextField optionDTextField;
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,8 +33,19 @@ public class QuestionInputTemplate extends JFrame {
 			}
 		});
 	}
+	
+	private JTextArea questionTextArea;
+	private JTextArea optionATextArea;
+	private JTextArea optionBTextArea;
+	private JTextArea optionCTextArea;
+	private JTextArea optionDTextArea;
+	
+	private static final String FRAME_TITLE = "Quiz Monster";
 
 	public QuestionInputTemplate() {
+		
+		this.setTitle(FRAME_TITLE);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(350, 50, 700, 600);
 		JPanel contentPane = new JPanel();
@@ -48,50 +53,49 @@ public class QuestionInputTemplate extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		setupTextField(contentPane);
+		setupTextArea(contentPane);
 		setupLabel(contentPane);
 		setupButton(contentPane);
 		setupSeperator(contentPane);
 	}
 	
-	private void setupTextField(JPanel contentPane) {
-		titleTextField = new JTextField();
-		titleTextField.setBounds(6, 49, 688, 37);
-		contentPane.add(titleTextField);
-		titleTextField.setColumns(10);
+	private void setupTextArea(JPanel contentPane) {
 		
-		optionATextField = new JTextField();
-		optionATextField.setBounds(19, 164, 662, 57);
-		contentPane.add(optionATextField);
-		optionATextField.setColumns(10);
+		questionTextArea = new JTextArea();
+		questionTextArea.setBounds(19, 84, 662, 68);
+		questionTextArea.setLineWrap(true);
+		contentPane.add(questionTextArea);
 		
-		optionBTextField = new JTextField();
-		optionBTextField.setColumns(10);
-		optionBTextField.setBounds(19, 268, 662, 51);
-		contentPane.add(optionBTextField);
+		optionATextArea = new JTextArea();
+		optionATextArea.setBounds(19, 199, 662, 44);
+		optionATextArea.setLineWrap(true);
+		contentPane.add(optionATextArea);
 		
-		optionCTextField = new JTextField();
-		optionCTextField.setColumns(10);
-		optionCTextField.setBounds(19, 366, 662, 51);
-		contentPane.add(optionCTextField);
+		optionBTextArea = new JTextArea();
+		optionBTextArea.setBounds(19, 294, 662, 44);
+		optionBTextArea.setLineWrap(true);
+		contentPane.add(optionBTextArea);
 		
-		optionDTextField = new JTextField();
-		optionDTextField.setColumns(10);
-		optionDTextField.setBounds(19, 467, 662, 51);
-		contentPane.add(optionDTextField);
+		optionCTextArea = new JTextArea();
+		optionCTextArea.setBounds(19, 394, 662, 44);
+		optionCTextArea.setLineWrap(true);
+		contentPane.add(optionCTextArea);
 		
-		
+		optionDTextArea = new JTextArea();
+		optionDTextArea.setBounds(19, 485, 662, 44);
+		optionDTextArea.setLineWrap(true);
+		contentPane.add(optionDTextArea);
 	}
 	
 	private void setupLabel(JPanel contentPane) {
 		JLabel questionNumerLabel = new JLabel("Question 1.");
 		questionNumerLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		questionNumerLabel.setBounds(16, 98, 678, 16);
+		questionNumerLabel.setBounds(19, 61, 678, 16);
 		contentPane.add(questionNumerLabel);
 		
-		JLabel titleLabel = new JLabel("Quiz Title");
+		JLabel titleLabel = new JLabel("Fake Midterm");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		titleLabel.setBounds(6, 6, 132, 43);
+		titleLabel.setBounds(19, 6, 132, 43);
 		contentPane.add(titleLabel);
 	} 
 	
@@ -106,19 +110,19 @@ public class QuestionInputTemplate extends JFrame {
 		
 		JRadioButton optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
-		optionARadioButton.setBounds(19, 139, 141, 23);
+		optionARadioButton.setBounds(19, 164, 141, 23);
 		contentPane.add(optionARadioButton);
 		
 		JRadioButton optionBRadioButton = new JRadioButton("B.");
-		optionBRadioButton.setBounds(19, 248, 141, 23);
+		optionBRadioButton.setBounds(19, 265, 141, 23);
 		contentPane.add(optionBRadioButton);
 		
 		JRadioButton optionCRadioButton = new JRadioButton("C.");
-		optionCRadioButton.setBounds(19, 343, 141, 23);
+		optionCRadioButton.setBounds(19, 370, 141, 23);
 		contentPane.add(optionCRadioButton);
 		
 		JRadioButton optionDRadioButton = new JRadioButton("D.");
-		optionDRadioButton.setBounds(19, 443, 141, 23);
+		optionDRadioButton.setBounds(19, 460, 141, 23);
 		contentPane.add(optionDRadioButton);
 		
 		ButtonGroup answerButtonGroup = new ButtonGroup();
@@ -130,15 +134,15 @@ public class QuestionInputTemplate extends JFrame {
 	
 	private void setupSeperator(JPanel contentPane) {
 		JSeparator seperatorAB = new JSeparator();
-		seperatorAB.setBounds(6, 224, 688, 12);
+		seperatorAB.setBounds(6, 255, 688, 12);
 		contentPane.add(seperatorAB);
 		
 		JSeparator separatorBC = new JSeparator();
-		separatorBC.setBounds(6, 331, 688, 12);
+		separatorBC.setBounds(6, 350, 688, 12);
 		contentPane.add(separatorBC);
 		
 		JSeparator separatorCD = new JSeparator();
-		separatorCD.setBounds(6, 431, 688, 12);
+		separatorCD.setBounds(6, 450, 688, 12);
 		contentPane.add(separatorCD);
 	}
 }
