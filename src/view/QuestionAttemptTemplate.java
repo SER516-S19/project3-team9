@@ -1,34 +1,67 @@
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Form to show a question and navaigation buttion and to give user
  * functionality to select one of the options.
- * @author      Sarthak Tiwari <sarthak.tiwari@asu.edu>
- * @version     1.0
+ *
+ * @author Sarthak Tiwari
+ * @version 1.0
  */
-public class QuestionAttemptTemplate extends JDialog {
+public final class QuestionAttemptTemplate extends JDialog {
 
-    private JLabel questionDescription;
-    private JRadioButton option1;
-    private JRadioButton option2;
-    private JRadioButton option3;
-    private JRadioButton option4;
-    private ButtonGroup options;
+    private static QuestionAttemptTemplate instance = null;
 
-    private short correctAnswer = 0;
-    private boolean isCorrectAnswer = false;
+    private static JLabel questionDescription;
 
-    private static String convertToMultiline(String orig)
-    {
-        return "<html>" + orig.replaceAll("\n", "<br>");
-    }
+    private static JRadioButton option1;
+    private static JRadioButton option2;
+    private static JRadioButton option3;
+    private static JRadioButton option4;
+    private static ButtonGroup options;
 
-    public boolean showQuestion(QuestionStub question) {
+    private static JButton next;
+    private static JButton giveup;
 
-        questionDescription.setText(convertToMultiline(question.getDescription()));
+    private static short correctAnswer = 0;
+    private static int isCorrectAnswer;
+
+    public static final int CORRECT_ANSWER = 0;
+    public static final int INCORRECT_ANSWER = 1;
+    public static final int GAVE_UP = -1;
+
+    /**
+     * public method to show the view.
+     *
+     * @param frame    : JFrame representing the parent frame
+     * @param question : QuestionStub representing the question to be displayed
+     * @return int : one of the three values representing student gave correct
+     *         answer, incorrect answer or gave up
+     */
+    public static int showQuestion(final JFrame frame,
+                                    final QuestionStub question) {
+
+        if (instance == null) {
+            instance = new QuestionAttemptTemplate(frame);
+        }
+
+        questionDescription.setText(
+                    convertToMultiline(question.getDescription()));
         option1.setText(convertToMultiline(question.getOption1()));
         option2.setText(convertToMultiline(question.getOption2()));
         option3.setText(convertToMultiline(question.getOption3()));
@@ -36,44 +69,51 @@ public class QuestionAttemptTemplate extends JDialog {
 
         correctAnswer = question.getCorrectOption();
 
-        this.pack();
-        setVisible(true);
+        instance.pack();
+        instance.setVisible(true);
         return isCorrectAnswer;
     }
 
-    public QuestionAttemptTemplate(JFrame frame) {
+    /**
+     * Constructor to setup the main window.
+     *
+     * @param frame : JFrame representing the parent frame
+     */
+    private QuestionAttemptTemplate(final JFrame frame) {
 
         super(frame, true);
 
         setTitle("Question");
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new WindowAdapter() {
-            @Override public void windowClosing(WindowEvent we) {
-                    isCorrectAnswer = false;
-                    clearAndHide();
-            }
-        });
+        isCorrectAnswer = INCORRECT_ANSWER;
 
-        this.setSize(600,400);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        this.setSize(600, 400);
         this.setMinimumSize(this.getSize());
         this.setMaximumSize(this.getSize());
 
         JPanel mainPanel = setupPanel();
-        mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5 ));
+        mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
 
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
         setResizable(false);
+        setLocationRelativeTo(frame);
     }
 
-    private JPanel setupPanel(){
+    /**
+     * Method to setup the main UI panel.
+     *
+     * @return JPanel : Panel containing all the UI components
+     */
+    private JPanel setupPanel() {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new Insets(0,0,10,10);
+        gridBagConstraints.insets = new Insets(0, 0, 10, 10);
         gridBagConstraints.anchor = GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.weightx = 1;
@@ -83,69 +123,125 @@ public class QuestionAttemptTemplate extends JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         questionDescription = new JLabel("");
-        
+
         mainPanel.add(questionDescription, gridBagConstraints);
 
         options = new ButtonGroup();
+
+        JPanel optionsPane = setupRadios();
+
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(optionsPane, gridBagConstraints);
+
+        JPanel buttonPane = setupButtons();
+
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(buttonPane, gridBagConstraints);
+
+        return mainPanel;
+    }
+
+    /**
+     * This method adds radio buttons to the UI.
+     *
+     * @return JPanel : panel containing all the radio buttons
+     */
+    private JPanel setupRadios() {
 
         JPanel optionsPane = new JPanel();
         optionsPane.setOpaque(false);
         optionsPane.setLayout(new GridBagLayout());
         optionsPane.setBorder(BorderFactory.createTitledBorder(
-                   BorderFactory.createEtchedBorder(), "Options"));
-        
-        option1 = new JRadioButton(""); options.add(option1);
-        option2 = new JRadioButton(""); options.add(option2);
-        option3 = new JRadioButton(""); options.add(option3);
-        option4 = new JRadioButton(""); options.add(option4);
+                            BorderFactory.createEtchedBorder(), "Options"));
+
+        option1 = new JRadioButton("");
+        options.add(option1);
+        option2 = new JRadioButton("");
+        options.add(option2);
+        option3 = new JRadioButton("");
+        options.add(option3);
+        option4 = new JRadioButton("");
+        options.add(option4);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;  gbc.gridy = 0;
-        gbc.weightx = 1;    gbc.weighty = 0.25;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 0.25;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_START;
-        optionsPane.add(option1, gbc);  gbc.gridy++;
-        optionsPane.add(option2, gbc);  gbc.gridy++;
-        optionsPane.add(option3, gbc);  gbc.gridy++;
+        optionsPane.add(option1, gbc);
+        gbc.gridy++;
+        optionsPane.add(option2, gbc);
+        gbc.gridy++;
+        optionsPane.add(option3, gbc);
+        gbc.gridy++;
         optionsPane.add(option4, gbc);
 
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(optionsPane, gridBagConstraints);
-        
-        JButton btn = new JButton("Next");
-        btn.addActionListener(new ActionListener(){
-            @Override public void actionPerformed(ActionEvent e) {
-                isCorrectAnswer = false;
-                switch(correctAnswer){
-                    case 0:
-                        if(option1.isSelected())
-                            isCorrectAnswer = true;
-                        break;
-                    case 1:
-                        if(option2.isSelected())
-                            isCorrectAnswer = true;
-                        break;
-                    case 2:
-                        if(option3.isSelected())
-                            isCorrectAnswer = true;
-                        break;
-                    case 3:
-                        if(option4.isSelected())
-                            isCorrectAnswer = true;
-                        break;
+        return optionsPane;
+
+    }
+
+    /**
+     * This method adds event listeners to both the buttons.
+     *
+     * @return JPanel : panel containing the next and giveup button
+     */
+    private JPanel setupButtons() {
+
+        JPanel buttonPane = new JPanel(new GridLayout(1, 2, 15, 15));
+
+        next = new JButton("Next");
+        giveup = new JButton("Give Up !");
+
+        next.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                isCorrectAnswer = INCORRECT_ANSWER;
+                switch (correctAnswer) {
+                case 0:
+                    if (option1.isSelected()) {
+                        isCorrectAnswer = CORRECT_ANSWER;
+                    }
+                    break;
+                case 1:
+                    if (option2.isSelected()) {
+                        isCorrectAnswer = CORRECT_ANSWER;
+                    }
+                    break;
+                case 2:
+                    if (option3.isSelected()) {
+                        isCorrectAnswer = CORRECT_ANSWER;
+                    }
+                    break;
+                case 3:
+                    if (option4.isSelected()) {
+                        isCorrectAnswer = CORRECT_ANSWER;
+                    }
+                    break;
+                default:
+                    isCorrectAnswer = INCORRECT_ANSWER;
                 }
                 clearAndHide();
             }
         });
 
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-        gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
-        mainPanel.add(btn, gridBagConstraints);
+        giveup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                isCorrectAnswer = GAVE_UP;
+                clearAndHide();
+            }
+        });
 
-        return mainPanel;
+        buttonPane.add(next);
+        buttonPane.add(giveup);
+
+        return buttonPane;
     }
 
     /** This method clears the dialog and hides it. */
@@ -154,5 +250,7 @@ public class QuestionAttemptTemplate extends JDialog {
         setVisible(false);
     }
 
-
+    private static String convertToMultiline(final String orig) {
+        return "<html>" + orig.replaceAll("\n", "<br>");
+    }
 }

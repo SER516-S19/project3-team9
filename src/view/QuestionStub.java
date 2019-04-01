@@ -1,7 +1,7 @@
 public class QuestionStub {
 
-    private String description = "Some question title that defines this question and some other blah blah blah text....\n It can be multiline so this is a new line\n And this is another new line";
-    private String option1 = "First Option for this question which is too long... it is still going on... and still you are reading it.... because it is not wrapped\nOh more text is here....";
+    private String description = "Some question title that defines this question and some other blah blah blah text.... It can be multiline so this is a new line\n And this is another new line";
+    private String option1 = "First Option for this question which is too long...\n it is still going on... \nand still you are reading it.... because it is not wrapped\nOh more text is here....";
     private String option2 = "Short Option";
     private String option3 = "3";
     private String option4 = "Blah Blah Blah Blah Blah Blah";
