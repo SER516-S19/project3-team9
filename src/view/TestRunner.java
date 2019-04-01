@@ -18,7 +18,17 @@ public class TestRunner {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
-        int flag = QuestionAttemptTemplate.showQuestion(f, new QuestionStub());
+        // showing last question
+        int flag = QuestionAttemptTemplate.showQuestion(f, new QuestionStub(), true);
+        if(flag == QuestionAttemptTemplate.CORRECT_ANSWER)
+            System.out.println("Correct Answer !");
+        else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER)
+            System.out.println("Incorrect Answer !");
+        else if(flag == QuestionAttemptTemplate.GAVE_UP){
+            System.out.println("Student Gave Up !");
+        }
+
+        flag = QuestionAttemptTemplate.showQuestion(f, new QuestionStub());
         if(flag == QuestionAttemptTemplate.CORRECT_ANSWER)
             System.out.println("Correct Answer !");
         else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER)

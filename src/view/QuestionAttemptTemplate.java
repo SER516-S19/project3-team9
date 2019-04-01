@@ -75,6 +75,31 @@ public final class QuestionAttemptTemplate extends JDialog {
     }
 
     /**
+     * Overload of the showQuestion method to include last question parameter
+     *
+     * @param frame    : JFrame representing the parent frame
+     * @param question : QuestionStub representing the question to be displayed
+     * @param isLastQuestion : boolean indicating whether displayed question
+     * is last question
+     * @return int : one of the three values representing student gave correct
+     *         answer, incorrect answer or gave up
+     */
+    public static int showQuestion(final JFrame frame,
+                                    final QuestionStub question,
+                                    final boolean isLastQuestion) {
+
+        if (instance == null) {
+            instance = new QuestionAttemptTemplate(frame);
+        }
+        
+        if(isLastQuestion) {
+            next.setText("Submit");
+        }
+
+        return showQuestion(frame, question);
+    }
+
+    /**
      * Constructor to setup the main window.
      *
      * @param frame : JFrame representing the parent frame
@@ -247,6 +272,7 @@ public final class QuestionAttemptTemplate extends JDialog {
     /** This method clears the dialog and hides it. */
     public void clearAndHide() {
         options.clearSelection();
+        next.setText("Next");
         setVisible(false);
     }
 
