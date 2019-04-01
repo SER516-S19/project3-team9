@@ -33,7 +33,11 @@ public class QuizChecker {
 		Random r = new Random();
 		while(questions.size()!=0 && giveup != true) {
 			int randomIndex = r.nextInt(questions.size());
-			while(!template.showQuestion(questions.get(randomIndex)));
+			while(!template.showQuestion(questions.get(randomIndex))) {
+				if(!(template.getDefaultCloseOperation()==3)) {
+					break;
+				}
+			}
 			System.out.println("1");
 			questions.remove(randomIndex);
 		}	
