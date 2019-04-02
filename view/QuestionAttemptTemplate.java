@@ -238,22 +238,22 @@ public final class QuestionAttemptTemplate extends JDialog {
                 isCorrectAnswer = INCORRECT_ANSWER;
                 System.out.println(correctAnswer);
                 switch (correctAnswer) {
-                case (short)0:
+                case (short)1:
                     if (option1.isSelected()) {
                         isCorrectAnswer = CORRECT_ANSWER;
                     }
                     break;
-                case (short)1:
+                case (short)2:
                     if (option2.isSelected()) {
                         isCorrectAnswer = CORRECT_ANSWER;
                     }
                     break;
-                case (short)2:
+                case (short)3:
                     if (option3.isSelected()) {
                         isCorrectAnswer = CORRECT_ANSWER;
                     }
                     break;
-                case (short)3:
+                case (short)4:
                     if (option4.isSelected()) {
                         isCorrectAnswer = CORRECT_ANSWER;
                     }
