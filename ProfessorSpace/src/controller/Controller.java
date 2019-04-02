@@ -17,6 +17,7 @@ public class Controller {
 	}
 
 	public void storeQuestion(Question question) {
+		
 		System.out.println(question.getDescription());
 		System.out.println(question.getOption1());
 		System.out.println(question.getOption2());
@@ -25,6 +26,7 @@ public class Controller {
 		System.out.println(question.getCorrectOption());
 		
 		questions.add(question);
+		frame.refreshPage(questions.size() + 1);
 	}
 	
 	// TODO Write a quiz inside json file.
