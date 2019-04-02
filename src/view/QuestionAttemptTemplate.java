@@ -1,3 +1,5 @@
+package src.view;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -15,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+import src.model.Question;
 
 /**
  * Form to show a question and navaigation buttion and to give user
@@ -54,7 +57,7 @@ public final class QuestionAttemptTemplate extends JDialog {
      *         answer, incorrect answer or gave up
      */
     public static int showQuestion(final JFrame frame,
-                                    final QuestionStub question) {
+                                    final Question question) {
 
         if (instance == null) {
             instance = new QuestionAttemptTemplate(frame);
@@ -85,7 +88,7 @@ public final class QuestionAttemptTemplate extends JDialog {
      *         answer, incorrect answer or gave up
      */
     public static int showQuestion(final JFrame frame,
-                                    final QuestionStub question,
+                                    final Question question,
                                     final boolean isLastQuestion) {
 
         if (instance == null) {
