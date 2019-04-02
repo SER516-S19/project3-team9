@@ -39,7 +39,7 @@ public final class QuestionAttemptTemplate extends JDialog {
     private static JButton giveup;
 
     private static short correctAnswer = 0;
-    private static int isCorrectAnswer;
+    private static int responseStatus;
 
     public static final int CORRECT_ANSWER = 0;
     public static final int INCORRECT_ANSWER = 1;
@@ -71,7 +71,7 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         instance.pack();
         instance.setVisible(true);
-        return isCorrectAnswer;
+        return responseStatus;
     }
 
     /**
@@ -110,7 +110,7 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         setTitle("Question");
 
-        isCorrectAnswer = INCORRECT_ANSWER;
+        responseStatus = INCORRECT_ANSWER;
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
@@ -226,30 +226,30 @@ public final class QuestionAttemptTemplate extends JDialog {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                isCorrectAnswer = INCORRECT_ANSWER;
+                responseStatus = INCORRECT_ANSWER;
                 switch (correctAnswer) {
                 case 0:
                     if (option1.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 1:
                     if (option2.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 2:
                     if (option3.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 3:
                     if (option4.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 default:
-                    isCorrectAnswer = INCORRECT_ANSWER;
+                    responseStatus = INCORRECT_ANSWER;
                 }
                 clearAndHide();
             }
@@ -258,7 +258,7 @@ public final class QuestionAttemptTemplate extends JDialog {
         giveup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                isCorrectAnswer = GAVE_UP;
+                responseStatus = GAVE_UP;
                 clearAndHide();
             }
         });
