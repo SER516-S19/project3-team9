@@ -20,7 +20,6 @@ import view.QuestionAttemptTemplate;
 public class QuizChecker {
 	private LinkedBlockingQueue<Question> questions;
 	private JFrame frame;
-	private boolean giveup;
 	
 	public QuizChecker(ArrayList<Question> questionList,JFrame frame){
 		questions = new LinkedBlockingQueue<Question>();
@@ -28,25 +27,31 @@ public class QuizChecker {
 			questions.add(q);
 		}
 		this.frame = frame;
-		giveup = false;
 	}
 	
+	/**
+	 * send the questions to the template,and show the view 
+	 * until the question list is empty or student gives up.
+	 */
 	public void sendQuestions(){
 		if(!questions.isEmpty()) {
-			 Question question = questions.poll();
-             System.out.println(question.getCorrectOption());
-			 int flag = QuestionAttemptTemplate.showQuestion(frame, question);
-			 System.out.println("flag"+flag);
-			 if(flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
-				 System.out.println("correct");
-				 sendQuestions();
-			 } else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER){
-				 System.out.println("incorrect");
-				 questions.add(question);
-				 sendQuestions();
-			 } else if(flag == QuestionAttemptTemplate.GAVE_UP) {
-				 System.out.println("giveup");
-			 }
+			Question question = questions.poll();
+			int flag = -1;
+			if(questions.size()==0) {
+				flag = QuestionAttemptTemplate.showQuestion(frame, question,true);
+			} else {
+				 flag = QuestionAttemptTemplate.showQuestion(frame, question);
+			}
+				 if(flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
+					 System.out.println("correct");
+					 sendQuestions();
+				 } else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER){
+					 System.out.println("incorrect");
+					 questions.add(question);
+					 sendQuestions();
+				 } else if(flag == QuestionAttemptTemplate.GAVE_UP) {
+					 System.out.println("giveup");
+				 }
 		}
 	}
 }
