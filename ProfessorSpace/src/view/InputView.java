@@ -1,58 +1,40 @@
 package view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import model.Question;
-
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.EmptyBorder;
 
-/**
- * Form to show place to create a quiz with questions
- * @author  Yu-Ting Tsao <ytsao2@asu.edu>
- * @version 1.0
- */
-public class QuestionInputTemplate extends JFrame {
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					QuestionInputTemplate frame = new QuestionInputTemplate();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+import controller.Controller;
+import model.Question;
+
+public class InputView extends JFrame {
+
+	private static final String FRAME_TITLE = "Quiz Monster";
 	
 	private JTextArea questionTextArea;
 	private JTextArea optionATextArea;
 	private JTextArea optionBTextArea;
 	private JTextArea optionCTextArea;
 	private JTextArea optionDTextArea;
+	private ButtonGroup answerButtonGroup;
 	
-	private ArrayList<Question> questions;
+	private Controller controller;
 	
-	private static final String FRAME_TITLE = "Quiz Monster";
-
-	public QuestionInputTemplate() {
+	public InputView(Controller c) {
 		
-		questions = new ArrayList<Question>();
+		this.controller = c;
 		
 		this.setTitle(FRAME_TITLE);
 		
@@ -67,17 +49,6 @@ public class QuestionInputTemplate extends JFrame {
 		setupLabel(contentPane);
 		setupButton(contentPane);
 		setupSeperator(contentPane);
-	}
-	
-	/**
-	 * Need Implemented function.
-	 */
-	private void storeThisQuestion(Question question) {
-		System.out.println("Store the input into question then store in ArrayList.");
-	}
-	
-	private void writeQuizToFilePath(String path) {
-		System.out.println("Store/quiz/somewhere/as/json/string.");
 	}
 	
 	private void setupTextArea(JPanel contentPane) {
@@ -131,7 +102,21 @@ public class QuestionInputTemplate extends JFrame {
 		JButton addMoreButton = new JButton("Add More Question");
 		addMoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				storeThisQuestion(null);
+				Enumeration<AbstractButton> elements = answerButtonGroup.getElements();
+				for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
+					AbstractButton button = (AbstractButton)elements.nextElement();
+					if (button.isSelected() == true) {
+						System.out.println("The correct answer is No. " + i);
+						Question q = new Question(
+								questionTextArea.getText(), 
+								optionATextArea.getText(), 
+								optionBTextArea.getText(), 
+								optionCTextArea.getText(), 
+								optionDTextArea.getText(), 
+								(short) i);
+						controller.storeQuestion(q);
+					}
+				}
 			}
 		});
 		addMoreButton.setBounds(385, 543, 180, 29);
@@ -140,30 +125,30 @@ public class QuestionInputTemplate extends JFrame {
 		JButton createButton = new JButton("Create");
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				writeQuizToFilePath("Hello");
+				controller.writeQuizToFilePath("Hello");
 			}
 		});
 		createButton.setBounds(577, 543, 117, 29);
 		contentPane.add(createButton);
 		
-		JRadioButton optionARadioButton = new JRadioButton("A.");
+		AbstractButton optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
 		optionARadioButton.setBounds(19, 164, 141, 23);
 		contentPane.add(optionARadioButton);
 		
-		JRadioButton optionBRadioButton = new JRadioButton("B.");
+		AbstractButton optionBRadioButton = new JRadioButton("B.");
 		optionBRadioButton.setBounds(19, 265, 141, 23);
 		contentPane.add(optionBRadioButton);
 		
-		JRadioButton optionCRadioButton = new JRadioButton("C.");
+		AbstractButton optionCRadioButton = new JRadioButton("C.");
 		optionCRadioButton.setBounds(19, 370, 141, 23);
 		contentPane.add(optionCRadioButton);
 		
-		JRadioButton optionDRadioButton = new JRadioButton("D.");
+		AbstractButton optionDRadioButton = new JRadioButton("D.");
 		optionDRadioButton.setBounds(19, 460, 141, 23);
 		contentPane.add(optionDRadioButton);
 		
-		ButtonGroup answerButtonGroup = new ButtonGroup();
+		answerButtonGroup = new ButtonGroup();
 		answerButtonGroup.add(optionARadioButton);
 		answerButtonGroup.add(optionBRadioButton);
 		answerButtonGroup.add(optionCRadioButton);
