@@ -231,22 +231,22 @@ public final class QuestionAttemptTemplate extends JDialog {
             public void actionPerformed(final ActionEvent e) {
                 responseStatus = INCORRECT_ANSWER;
                 switch (correctAnswer) {
-                case 0:
+                case 1:
                     if (option1.isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case 1:
+                case 2:
                     if (option2.isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case 2:
+                case 3:
                     if (option3.isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case 3:
+                case 4:
                     if (option4.isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
