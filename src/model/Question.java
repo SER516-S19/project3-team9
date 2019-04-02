@@ -1,4 +1,5 @@
 package src.model;
+
 /**
  * Class to store all the information regarding a single question.
  *
@@ -22,17 +23,17 @@ public class Question {
     /**
      * Parametrised constructor with all required attributes.
      *
-     * @param descriptionInput    : String with the question description
-     * @param option1Input        : String with the option 1 of the question
-     * @param option2Input        : String with the option 2 of the question
-     * @param option3Input        : String with the option 3 of the question
-     * @param option4Input        : String with the option 4 of the question
-     * @param correctOptionNumberInput : Short giving the correct options number
+     * @param descriptionInput  : String with the question description
+     * @param option1Input      : String with the option 1 of the question
+     * @param option2Input      : String with the option 2 of the question
+     * @param option3Input      : String with the option 3 of the question
+     * @param option4Input      : String with the option 4 of the question
+     * @param correctOptionNumberInput : Short shows the correct options number
      */
     public Question(final String descriptionInput,
-        final String option1Input, final String option2Input,
-        final String option3Input, final String option4Input,
-        final short correctOptionNumberInput) {
+                    final String option1Input, final String option2Input,
+                    final String option3Input, final String option4Input,
+                    final short correctOptionNumberInput) {
 
         setDescription(descriptionInput);
 
