@@ -23,12 +23,14 @@ public class InputView extends JFrame {
 
 	private static final String FRAME_TITLE = "Quiz Monster";
 	
+	private JLabel questionNumerLabel;
 	private JTextArea questionTextArea;
 	private JTextArea optionATextArea;
 	private JTextArea optionBTextArea;
 	private JTextArea optionCTextArea;
 	private JTextArea optionDTextArea;
 	private ButtonGroup answerButtonGroup;
+	private AbstractButton optionARadioButton;
 	
 	private Controller controller;
 	
@@ -49,6 +51,16 @@ public class InputView extends JFrame {
 		setupLabel(contentPane);
 		setupButton(contentPane);
 		setupSeperator(contentPane);
+	}
+	
+	public void refreshPage(int questionNo) {
+		questionNumerLabel.setText("Question " + questionNo  + ".");
+		questionTextArea.setText(null);
+		optionATextArea.setText(null);
+		optionBTextArea.setText(null);
+		optionCTextArea.setText(null);
+		optionDTextArea.setText(null);
+		optionARadioButton.setSelected(true);
 	}
 	
 	private void setupTextArea(JPanel contentPane) {
@@ -86,7 +98,7 @@ public class InputView extends JFrame {
 	
 	private void setupLabel(JPanel contentPane) {
 		
-		JLabel questionNumerLabel = new JLabel("Question 1.");
+		questionNumerLabel = new JLabel("Question 1.");
 		questionNumerLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		questionNumerLabel.setBounds(19, 61, 678, 16);
 		contentPane.add(questionNumerLabel);
@@ -131,7 +143,7 @@ public class InputView extends JFrame {
 		createButton.setBounds(577, 543, 117, 29);
 		contentPane.add(createButton);
 		
-		AbstractButton optionARadioButton = new JRadioButton("A.");
+		optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
 		optionARadioButton.setBounds(19, 164, 141, 23);
 		contentPane.add(optionARadioButton);
