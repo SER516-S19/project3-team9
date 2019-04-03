@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -42,23 +43,17 @@ public final class QuestionAttemptTemplate extends JDialog {
     private static JButton giveup;
 
     private static short correctAnswer = 0;
-    private static int isCorrectAnswer;
+    private static int responseStatus;
 
     public static final int CORRECT_ANSWER = 0;
     public static final int INCORRECT_ANSWER = 1;
     public static final int GAVE_UP = -1;
-    
-    public enum Status {
-    	CORRECT_ANSWER,
-        INCORRECT_ANSWER,
-        GAVE_UP
-    }
 
     /**
      * public method to show the view.
      *
      * @param frame    : JFrame representing the parent frame
-     * @param question : Question representing the question to be displayed
+     * @param question : QuestionStub representing the question to be displayed
      * @return int : one of the three values representing student gave correct
      *         answer, incorrect answer or gave up
      */
@@ -80,14 +75,14 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         instance.pack();
         instance.setVisible(true);
-        return isCorrectAnswer;
+        return responseStatus;
     }
 
     /**
      * Overload of the showQuestion method to include last question parameter
      *
      * @param frame    : JFrame representing the parent frame
-     * @param question : Question representing the question to be displayed
+     * @param question : QuestionStub representing the question to be displayed
      * @param isLastQuestion : boolean indicating whether displayed question
      * is last question
      * @return int : one of the three values representing student gave correct
@@ -119,7 +114,7 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         setTitle("Question");
 
-        isCorrectAnswer = INCORRECT_ANSWER;
+        responseStatus = INCORRECT_ANSWER;
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
@@ -235,31 +230,30 @@ public final class QuestionAttemptTemplate extends JDialog {
         next.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                isCorrectAnswer = INCORRECT_ANSWER;
-                System.out.println(correctAnswer);
+                responseStatus = INCORRECT_ANSWER;
                 switch (correctAnswer) {
-                case (short)1:
+                case 1:
                     if (option1.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case (short)2:
+                case 2:
                     if (option2.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case (short)3:
+                case 3:
                     if (option3.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
-                case (short)4:
+                case 4:
                     if (option4.isSelected()) {
-                        isCorrectAnswer = CORRECT_ANSWER;
+                        responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 default:
-                    isCorrectAnswer = INCORRECT_ANSWER;
+                    responseStatus = INCORRECT_ANSWER;
                 }
                 clearAndHide();
             }
@@ -268,7 +262,7 @@ public final class QuestionAttemptTemplate extends JDialog {
         giveup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                isCorrectAnswer = GAVE_UP;
+                responseStatus = GAVE_UP;
                 clearAndHide();
             }
         });
