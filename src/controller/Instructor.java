@@ -22,20 +22,30 @@ public class Instructor {
 		frame.setVisible(true);
 	}
 
-	public void storeQuestion(Question question) {
+	public void storeQuestion(Question question, Boolean isEnd) {
 		
-		System.out.println(question.getDescription());
-		System.out.println(question.getOption1());
-		System.out.println(question.getOption2());
-		System.out.println(question.getOption3());
-		System.out.println(question.getOption4());
-		System.out.println("The answer is No. " + question.getCorrectOption());
-		questions.add(question);
-		frame.refreshPage(questions.size() + 1);
+		if (checkIsValid(question)) {
+			questions.add(question);
+		} else {
+			// TODO Alert
+			return;
+		}
+		System.out.println("Store question: " + question);
+		
+		if (isEnd) {
+			writeQuizToFilePath("Store/quiz/somewhere/as/json/string.");
+		} else {
+			frame.refreshPage(questions.size() + 1);
+		}
 	}
 	
-	// TODO Write a quiz inside JSON file.
-	public void writeQuizToFilePath(String path) {
-		System.out.println("Store/quiz/somewhere/as/json/string.");
+	private void writeQuizToFilePath(String path) {
+		System.out.println("My store path: " + path);
+		// TODO Go to firework finish page!!!!!
+	}
+	
+	private Boolean checkIsValid(Question question) {
+		// TODO Check empty or not for fields.
+		return true;
 	}
 }

@@ -69,6 +69,26 @@ public class MakeQuestionView extends JFrame {
 		optionARadioButton.setSelected(true);
 	}
 	
+	private Question formCurrentQuestion() {
+		
+		Question q = null;
+		
+		Enumeration<AbstractButton> elements = answerButtonGroup.getElements();
+		for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
+			AbstractButton button = (AbstractButton)elements.nextElement();
+			if (button.isSelected() == true) {
+				q = new Question(
+					questionTextArea.getText(), 
+					optionATextArea.getText(), 
+					optionBTextArea.getText(), 
+					optionCTextArea.getText(), 
+					optionDTextArea.getText(), 
+					(short) i);
+			}
+		}
+		return q;
+	}
+	
 	private void setupTextArea(JPanel contentPane) {
 		
 		questionTextArea = new JTextArea();
@@ -120,20 +140,7 @@ public class MakeQuestionView extends JFrame {
 		JButton addMoreButton = new JButton("Add More Question");
 		addMoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Enumeration<AbstractButton> elements = answerButtonGroup.getElements();
-				for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
-					AbstractButton button = (AbstractButton)elements.nextElement();
-					if (button.isSelected() == true) {
-						Question q = new Question(
-								questionTextArea.getText(), 
-								optionATextArea.getText(), 
-								optionBTextArea.getText(), 
-								optionCTextArea.getText(), 
-								optionDTextArea.getText(), 
-								(short) i);
-						controller.storeQuestion(q);
-					}
-				}
+				controller.storeQuestion(formCurrentQuestion(), false);
 			}
 		});
 		addMoreButton.setBounds(385, 543, 180, 29);
@@ -142,7 +149,7 @@ public class MakeQuestionView extends JFrame {
 		JButton createButton = new JButton("Create");
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.writeQuizToFilePath("Hello");
+				controller.storeQuestion(formCurrentQuestion(), true);
 			}
 		});
 		createButton.setBounds(577, 543, 117, 29);
