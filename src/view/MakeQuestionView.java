@@ -1,4 +1,4 @@
-package view;
+package src.view;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,10 +16,16 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import controller.Controller;
-import model.Question;
+import src.controller.Instructor;
+import src.model.Question;
 
-public class InputView extends JFrame {
+/**
+ * View for professor to create a question and its options.
+ *
+ * @author Yu-Ting Tsao
+ * @version 1.0
+ */
+public class MakeQuestionView extends JFrame {
 
 	private static final String FRAME_TITLE = "Quiz Monster";
 	
@@ -32,9 +38,9 @@ public class InputView extends JFrame {
 	private ButtonGroup answerButtonGroup;
 	private AbstractButton optionARadioButton;
 	
-	private Controller controller;
+	private Instructor controller;
 	
-	public InputView(Controller c) {
+	public MakeQuestionView(Instructor c) {
 		
 		this.controller = c;
 		
@@ -118,7 +124,6 @@ public class InputView extends JFrame {
 				for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
 					AbstractButton button = (AbstractButton)elements.nextElement();
 					if (button.isSelected() == true) {
-						System.out.println("The correct answer is No. " + i);
 						Question q = new Question(
 								questionTextArea.getText(), 
 								optionATextArea.getText(), 

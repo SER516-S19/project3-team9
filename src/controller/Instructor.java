@@ -1,18 +1,24 @@
-package controller;
+package src.controller;
 
 import java.util.ArrayList;
+import src.model.Question;
+import src.view.MakeQuestionView;;
 
-import model.Question;
-import view.InputView;
-
-public class Controller {
+/**
+ * The controller of the inputs from user including store question
+ * and write the quiz into the JSON file.
+ *
+ * @author Yu-Ting Tsao
+ * @version 1.0
+ */
+public class Instructor {
 	
-	private InputView frame;
+	private MakeQuestionView frame;
 	private ArrayList<Question> questions;
 	
-	public Controller() {
+	public Instructor() {
 		questions = new ArrayList<Question>();
-		frame = new InputView(this);
+		frame = new MakeQuestionView(this);
 		frame.setVisible(true);
 	}
 
@@ -23,13 +29,12 @@ public class Controller {
 		System.out.println(question.getOption2());
 		System.out.println(question.getOption3());
 		System.out.println(question.getOption4());
-		System.out.println(question.getCorrectOption());
-		
+		System.out.println("The answer is No. " + question.getCorrectOption());
 		questions.add(question);
 		frame.refreshPage(questions.size() + 1);
 	}
 	
-	// TODO Write a quiz inside json file.
+	// TODO Write a quiz inside JSON file.
 	public void writeQuizToFilePath(String path) {
 		System.out.println("Store/quiz/somewhere/as/json/string.");
 	}

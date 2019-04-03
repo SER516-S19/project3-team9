@@ -1,14 +1,20 @@
-package main;
+package src.main;
 
 import java.awt.EventQueue;
-import controller.Controller;
+import src.controller.Instructor;
 
-public class TestRunner {
+/**
+ * The start running point of professor side application.
+ *
+ * @author Yu-Ting Tsao
+ * @version 1.0
+ */
+public class ProfRunner {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new Controller();
+					new Instructor();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
