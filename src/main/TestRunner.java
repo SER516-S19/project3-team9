@@ -1,10 +1,10 @@
-package main;
+package src.main;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import controller.QuizChecker;
-import model.Question;
+import src.controller.QuizChecker;
+import src.model.Question;
 
 /**
  * Form to show a question and navaigation buttion and to give user

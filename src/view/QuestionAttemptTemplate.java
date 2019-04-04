@@ -1,4 +1,4 @@
-package view;
+package src.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
-import model.Question;
+import src.model.Question;
 
 /**
  * Form to show a question and navaigation buttion and to give user

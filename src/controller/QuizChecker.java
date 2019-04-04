@@ -1,4 +1,4 @@
-package controller;
+package src.controller;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -8,8 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import model.Question;
-import view.QuestionAttemptTemplate;
+import src.model.Question;
+import src.view.QuestionAttemptTemplate;
 /**
  * students can try questions until they answered all questions, 
  * and if their answer is wrong, they can retry this question.
