@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class SelectQuizTitle {
 
-	SelectQuizTitle(JFrame quiz) {
+	SelectQuizTitle(JFrame quiz, QuizChecker Qc) {
 		JPanel quizpanel = new JPanel();
 		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
 
@@ -39,7 +39,6 @@ public class SelectQuizTitle {
 		menu.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				QuizChecker Qc = new QuizChecker();
 				String x = String.valueOf(menu.getSelectedItem());
 				Qc.selectedTitle(x);
 
