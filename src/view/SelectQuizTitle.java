@@ -1,4 +1,5 @@
 package view;
+package src.controller;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -7,17 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SelectQuizTitle {
 
-	SelectQuizTitle() {
-
-		JFrame quiz = new JFrame("Quiz");
-		quiz.setVisible(true);
-		quiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		quiz.setSize(500, 500);
-		quiz.setLocation(430, 100);
-
+	SelectQuizTitle(JFrame quiz) {
 		JPanel quizpanel = new JPanel();
 		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
 
@@ -30,17 +26,25 @@ public class SelectQuizTitle {
 
 		String[] choices = { "CHOICE 1", "CHOICE 2", "CHOICE 3", "CHOICE 4", "CHOICE 5", "CHOICE 6" };
 
-		final JComboBox<String> cb = new JComboBox<String>(choices);
+		final JComboBox<String> menu = new JComboBox<String>(choices);
 
-		cb.setMaximumSize(cb.getPreferredSize());
-		cb.setAlignmentX(Component.CENTER_ALIGNMENT);
-		quizpanel.add(cb);
+		menu.setMaximumSize(menu.getPreferredSize());
+		menu.setAlignmentX(Component.CENTER_ALIGNMENT);
+		quizpanel.add(menu);
 
 		JButton btn = new JButton("OK");
 		btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		quizpanel.add(btn);
 
-		quiz.setVisible(true);
+		menu.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				QuizChecker Qc = new QuizChecker();
+				String x = String.valueOf(menu.getSelectedItem());
+				Qc.selectedTitle(x);
+
+			}
+		});
 
 	}
 }
