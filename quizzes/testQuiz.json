@@ -1,0 +1,25 @@
+{
+    "questions": [
+        {
+            "title": "What is the color of the sky?",
+            "options": [
+                "Blue", "Green", "Red", "Yellow"
+            ],
+            "correctAnswer": "Blue"
+        },
+        {
+            "title": "What is the capital of France?",
+            "options": [
+                "Lyon", "Paris", "London", "Rome"
+            ],
+            "correctAnswer": "Paris"
+        },
+	{
+            "title": "How many members are in our group?",
+            "options": [
+                "6", "7", "8", "9"
+            ],
+            "correctAnswer": "9"
+        }
+    ]
+}
