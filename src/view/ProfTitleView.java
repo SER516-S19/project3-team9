@@ -1,14 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
 /**
  * Form to input a quiz title and navaigation buttion
  *
  * @author Xiangwei Zheng
  * @version 1.0
  */
-
 public class ProfTitleView extends JFrame{
     private JTextField titleTextField;
     public static void main(String[] args) {
@@ -23,8 +21,6 @@ public class ProfTitleView extends JFrame{
             }
         });
     }
-
-
     public ProfTitleView() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(350, 50, 700, 600);
@@ -36,7 +32,6 @@ public class ProfTitleView extends JFrame{
 
         setupTextField(contentPane);
     }
-
     private void setupTextField(JPanel contentPane) {
         titleTextField = new JTextField();
         titleTextField.setBounds(6, 49, 688, 37);
@@ -49,6 +44,4 @@ public class ProfTitleView extends JFrame{
         titleLabel.setBounds(6, 6, 132, 43);
         contentPane.add(titleLabel);
     }
-
-
 }
