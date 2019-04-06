@@ -15,9 +15,8 @@ public class SelectQuizTitle {
 
 	SelectQuizTitle(JFrame quiz, QuizChecker Qc) {
 		JPanel quizpanel = new JPanel();
-		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
-
 		quiz.add(quizpanel);
+		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
 
 		JLabel message = new JLabel("Select the quiz from choices");
 		message.setAlignmentX(Component.CENTER_ALIGNMENT);
