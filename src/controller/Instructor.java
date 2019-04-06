@@ -2,6 +2,9 @@
 package src.controller;
 
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
+
 import src.model.Question;
 import src.view.MakeQuestionView;
 import src.view.ProfTitleView;;
@@ -15,39 +18,53 @@ import src.view.ProfTitleView;;
  */
 public class Instructor {
 	
-	private MakeQuestionView frame;
-	private ProfTitleView frame_title;
+	private JFrame profFrame;
+	private MakeQuestionView makeQuestionPanel;
+	
 	private ArrayList<Question> questions;
+	
+	private static final String FRAME_TITLE = "Quiz Monster";
 	
 	public Instructor() {
 		questions = new ArrayList<Question>();
-		frame_title = new ProfTitleView(this);
-		frame_title.setVisible(true);
+		setupFrame();
+		editTitlePage();
 	}
 	
-	public void gotoQuestion(String quiztitle, Boolean gotoQues) {
-	        frame = new MakeQuestionView(this);
-		frame.setVisible(true);
+	private void setupFrame() {
+		profFrame = new JFrame();
+		profFrame.setTitle(FRAME_TITLE);
+		profFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		profFrame.setBounds(350, 50, 700, 600);
+		profFrame.setVisible(true);
+	}
+	
+	private void editTitlePage() {
+		ProfTitleView titlePanel = new ProfTitleView(this);
+		profFrame.setContentPane(titlePanel);
+	}
+	
+	public void gotoQuestion(String quizTitle, Boolean gotoQues) {
+		makeQuestionPanel = new MakeQuestionView(quizTitle, this);
+		profFrame.setContentPane(makeQuestionPanel);
+		profFrame.revalidate();
 	}
 
 	public void exitQuiz(Boolean exitQuiz) {
-		System.out.println("exitQuiz");
 		System.exit(0);
 	}
+	
 	public void storeQuestion(Question question, Boolean isEnd) {
-		
 		if (checkIsValid(question)) {
 			questions.add(question);
 		} else {
 			// TODO Alert
 			return;
 		}
-		System.out.println("Store question: " + question);
-		
 		if (isEnd) {
 			writeQuizToFilePath("Store/quiz/somewhere/as/json/string.");
 		} else {
-			frame.refreshPage(questions.size() + 1);
+			makeQuestionPanel.refreshPage(questions.size() + 1);
 		}
 	}
 	

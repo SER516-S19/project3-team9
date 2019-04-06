@@ -8,13 +8,11 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 
 import src.controller.Instructor;
 import src.model.Question;
@@ -25,9 +23,7 @@ import src.model.Question;
  * @author Yu-Ting Tsao
  * @version 1.0
  */
-public class MakeQuestionView extends JFrame {
-
-	private static final String FRAME_TITLE = "Quiz Monster";
+public class MakeQuestionView extends JPanel {
 	
 	private JLabel questionNumerLabel;
 	private JTextArea questionTextArea;
@@ -40,23 +36,14 @@ public class MakeQuestionView extends JFrame {
 	
 	private Instructor controller;
 	
-	public MakeQuestionView(Instructor c) {
+	public MakeQuestionView(String title, Instructor c) {
 		
 		this.controller = c;
-		
-		this.setTitle(FRAME_TITLE);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(350, 50, 700, 600);
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		setupTextArea(contentPane);
-		setupLabel(contentPane);
-		setupButton(contentPane);
-		setupSeperator(contentPane);
+		this.setLayout(null);
+		setupTextArea();
+		setupLabel(title);
+		setupButton();
+		setupSeperator();
 	}
 	
 	public void refreshPage(int questionNo) {
@@ -89,53 +76,53 @@ public class MakeQuestionView extends JFrame {
 		return q;
 	}
 	
-	private void setupTextArea(JPanel contentPane) {
+	private void setupTextArea() {
 		
 		questionTextArea = new JTextArea();
 		questionTextArea.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		questionTextArea.setBounds(19, 84, 662, 68);
 		questionTextArea.setLineWrap(true);
-		contentPane.add(questionTextArea);
+		add(questionTextArea);
 		
 		optionATextArea = new JTextArea();
 		optionATextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionATextArea.setBounds(19, 199, 662, 44);
 		optionATextArea.setLineWrap(true);
-		contentPane.add(optionATextArea);
+		add(optionATextArea);
 		
 		optionBTextArea = new JTextArea();
 		optionBTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionBTextArea.setBounds(19, 294, 662, 44);
 		optionBTextArea.setLineWrap(true);
-		contentPane.add(optionBTextArea);
+		add(optionBTextArea);
 		
 		optionCTextArea = new JTextArea();
 		optionCTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionCTextArea.setBounds(19, 394, 662, 44);
 		optionCTextArea.setLineWrap(true);
-		contentPane.add(optionCTextArea);
+		add(optionCTextArea);
 		
 		optionDTextArea = new JTextArea();
 		optionDTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionDTextArea.setBounds(19, 485, 662, 44);
 		optionDTextArea.setLineWrap(true);
-		contentPane.add(optionDTextArea);
+		add(optionDTextArea);
 	}
 	
-	private void setupLabel(JPanel contentPane) {
+	private void setupLabel(String title) {
 		
 		questionNumerLabel = new JLabel("Question 1.");
 		questionNumerLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		questionNumerLabel.setBounds(19, 61, 678, 16);
-		contentPane.add(questionNumerLabel);
+		add(questionNumerLabel);
 		
-		JLabel titleLabel = new JLabel("Fake Midterm(set by previous page.)");
+		JLabel titleLabel = new JLabel(title);
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		titleLabel.setBounds(19, 6, 662, 43);
-		contentPane.add(titleLabel);
+		add(titleLabel);
 	} 
 	
-	private void setupButton(JPanel contentPane) {
+	private void setupButton() {
 		
 		JButton addMoreButton = new JButton("Add More Question");
 		addMoreButton.addActionListener(new ActionListener() {
@@ -144,7 +131,7 @@ public class MakeQuestionView extends JFrame {
 			}
 		});
 		addMoreButton.setBounds(385, 543, 180, 29);
-		contentPane.add(addMoreButton);
+		add(addMoreButton);
 		
 		JButton createButton = new JButton("Create");
 		createButton.addActionListener(new ActionListener() {
@@ -153,33 +140,33 @@ public class MakeQuestionView extends JFrame {
 			}
 		});
 		createButton.setBounds(577, 543, 117, 29);
-		contentPane.add(createButton);
+		add(createButton);
 		
-		JButton exitButton = new JButton("Exit");
+		JButton exitButton = new JButton("EXIT");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.exitQuiz(true);
 			}
 		});
-		exitButton.setBounds(697, 543, 60, 29);
-		contentPane.add(exitButton);
+		exitButton.setBounds(19, 541, 117, 29);
+		add(exitButton);
 		
 		optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
 		optionARadioButton.setBounds(19, 164, 141, 23);
-		contentPane.add(optionARadioButton);
+		add(optionARadioButton);
 		
 		AbstractButton optionBRadioButton = new JRadioButton("B.");
 		optionBRadioButton.setBounds(19, 265, 141, 23);
-		contentPane.add(optionBRadioButton);
+		add(optionBRadioButton);
 		
 		AbstractButton optionCRadioButton = new JRadioButton("C.");
 		optionCRadioButton.setBounds(19, 370, 141, 23);
-		contentPane.add(optionCRadioButton);
+		add(optionCRadioButton);
 		
 		AbstractButton optionDRadioButton = new JRadioButton("D.");
 		optionDRadioButton.setBounds(19, 460, 141, 23);
-		contentPane.add(optionDRadioButton);
+		add(optionDRadioButton);
 		
 		answerButtonGroup = new ButtonGroup();
 		answerButtonGroup.add(optionARadioButton);
@@ -188,18 +175,18 @@ public class MakeQuestionView extends JFrame {
 		answerButtonGroup.add(optionDRadioButton);
 	} 
 	
-	private void setupSeperator(JPanel contentPane) {
+	private void setupSeperator() {
 		
 		JSeparator seperatorAB = new JSeparator();
 		seperatorAB.setBounds(6, 255, 688, 12);
-		contentPane.add(seperatorAB);
+		add(seperatorAB);
 		
 		JSeparator separatorBC = new JSeparator();
 		separatorBC.setBounds(6, 350, 688, 12);
-		contentPane.add(separatorBC);
+		add(separatorBC);
 		
 		JSeparator separatorCD = new JSeparator();
 		separatorCD.setBounds(6, 450, 688, 12);
-		contentPane.add(separatorCD);
+		add(separatorCD);
 	}
 }
