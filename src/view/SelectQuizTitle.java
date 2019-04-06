@@ -34,6 +34,7 @@ public class SelectQuizTitle {
 		JButton btn = new JButton("OK");
 		btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		quizpanel.add(btn);
+		quiz.validate();
 
 		menu.addActionListener(new ActionListener() {
 
