@@ -84,7 +84,7 @@ public class ProfTitleView extends JFrame {
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//controller.exit(true);
+				controller.exitQuiz(true);
 			}
 		});
 		exitButton.setBounds(577, 543, 117, 29);
