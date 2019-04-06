@@ -74,7 +74,7 @@ public class MakeQuestionView extends JFrame {
 		Question q = null;
 		
 		Enumeration<AbstractButton> elements = answerButtonGroup.getElements();
-		for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
+		for(int i = 1; i<answerButtonGroup.getButtonCount(); i++) {
 			AbstractButton button = (AbstractButton)elements.nextElement();
 			if (button.isSelected() == true) {
 				q = new Question(
