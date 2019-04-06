@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.FileReader;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import com.google.gson.Gson;
 import src.model.Quiz;
 import src.model.Question;
 
@@ -48,45 +49,48 @@ public class QuizReader {
      */
     private Quiz createQuiz(JsonReader reader, String quizName) throws IOException {
         ArrayList<Question> questionList = new ArrayList<>();
+        Gson gson = new Gson();
+        QuizJson quizJson = gson.fromJson(reader, QuizJson.class);
 
-        reader.beginObject();
-        System.out.println(reader.nextName()); //questions label
-        reader.beginArray();
-
-        //loop through question array
-        while(reader.hasNext() && reader.peek()!= JsonToken.END_ARRAY) {
+        for(int i = 0; i < quizJson.questions.size(); i++) {
             Question question = new Question();
-            String correctAnswer, opt1, opt2, opt3, opt4;
+            QuestionJson json = quizJson.questions.get(i);
 
-            reader.beginObject();
-            reader.nextName(); //title label
-            question.setDescription(reader.nextString()); //title String
-            reader.nextName(); //options label
-            reader.beginArray();
-            opt1 = reader.nextString(); //option1
-            question.setOption1(opt1);
-            opt2 = reader.nextString(); //option2
-            question.setOption2(opt2);
-            opt3 = reader.nextString(); //option3
-            question.setOption3(opt3);
-            opt4 = reader.nextString(); //option4
-            question.setOption4(opt4);
-            reader.endArray();
-            reader.nextName(); //correctAnswer label
-            correctAnswer = reader.nextString(); //correct answer option
-            reader.endObject();
+            question.setDescription(json.title);
+            question.setOption1(json.options.get(0));
+            question.setOption2(json.options.get(1));
+            question.setOption3(json.options.get(2));
+            question.setOption4(json.options.get(3));
 
-            //determine the correct option index
-            if(correctAnswer.equals(opt1)) question.setCorrectOption((short)1);
-            else if(correctAnswer.equals(opt2)) question.setCorrectOption((short)2);
-            else if(correctAnswer.equals(opt3)) question.setCorrectOption((short)3);
-            else if(correctAnswer.equals(opt4)) question.setCorrectOption((short)4);
-            else question.setCorrectOption((short)0);
+            if(json.correctAnswer.equals(question.getOption1()))
+                question.setCorrectOption((short)1);
+            else if(json.correctAnswer.equals(question.getOption2()))
+                question.setCorrectOption((short)2);
+            else if(json.correctAnswer.equals(question.getOption3()))
+                question.setCorrectOption((short)3);
+            else if(json.correctAnswer.equals(question.getOption4()))
+                question.setCorrectOption((short)4);
+            else
+                question.setCorrectOption((short)0);
 
             questionList.add(question);
         }
-        reader.endArray();
-
         return new Quiz(quizName, questionList);
+    }
+
+    /**
+     * Dummy classes that can store the quiz JSON based on its format.
+     */
+    private class QuizJson {
+        ArrayList<QuestionJson> questions = new ArrayList<>();
+    }
+
+    /**
+     * Dummy classes that can store the questions JSON based on its format.
+     */
+    private class QuestionJson {
+        String title;
+        ArrayList<String> options;
+        String correctAnswer;
     }
 }

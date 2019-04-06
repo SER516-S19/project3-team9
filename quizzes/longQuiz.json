@@ -1,0 +1,53 @@
+{
+    "questions": [
+        {
+            "title": "What is 1+1?",
+            "options": [
+                "0", "1", "2", "3"
+            ],
+            "correctAnswer": "2"
+        },
+        {
+            "title": "What is 5+5?",
+            "options": [
+                "25", "0", "5", "10"
+            ],
+            "correctAnswer": "10"
+        },
+	    {
+            "title": "What is 7*2?",
+            "options": [
+                "14", "7", "18", "-9"
+            ],
+            "correctAnswer": "14"
+        },
+        {
+            "title": "What is 900-23?",
+            "options": [
+                "1432", "999", "18281", "877"
+            ],
+            "correctAnswer": "877"
+        },
+        {
+            "title": "What is 0-6?",
+            "options": [
+                "-4", "-5", "-6", "-7"
+            ],
+            "correctAnswer": "-6"
+        },
+        {
+            "title": "What is 8*6?",
+            "options": [
+                "42", "47", "48", "46"
+            ],
+            "correctAnswer": "48"
+        },
+        {
+            "title": "What is 2^4?",
+            "options": [
+                "2", "4", "8", "16"
+            ],
+            "correctAnswer": "16"
+        }
+    ]
+}

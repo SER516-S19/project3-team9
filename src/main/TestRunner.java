@@ -34,8 +34,17 @@ public class TestRunner {
         ArrayList<String> quizzes = qlist.readQuizList();
         System.out.println(quizzes);
 
+        /*
+        To be implemented:
+        1. Create a QuizReader object and a QuizList object.
+        2. Call the QuizList method to get a list of all quizzes in the 'quizzes' folder.
+        3. Display the list in the UI page.
+        4. Get user's input from the dropdown to choose a quiz.
+        5. Take the name of that quiz (String) and pass it to QuizReader, which will give you the Quiz object.
+        6. Generate the quiz using the Quiz object.
+        */
         try {
-            Quiz qz = qr.readQuiz(quizzes.get(0));
+            Quiz qz = qr.readQuiz(quizzes.get(1));
 
             ArrayList<Question> ques = qz.getQuestions();
             QuizChecker q = new QuizChecker(ques,f);
