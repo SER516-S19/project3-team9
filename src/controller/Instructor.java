@@ -21,16 +21,19 @@ public class Instructor {
 	
 	public Instructor() {
 		questions = new ArrayList<Question>();
-
 		frame_title = new ProfTitleView(this);
 		frame_title.setVisible(true);
 	}
 	
 	public void gotoQuestion(String quiztitle, Boolean gotoQues) {
-	    frame = new MakeQuestionView(this);
+	        frame = new MakeQuestionView(this);
 		frame.setVisible(true);
 	}
 
+	public void exitQuiz(Boolean exitQuiz) {
+		System.out.println("exitQuiz");
+		System.exit(0);
+	}
 	public void storeQuestion(Question question, Boolean isEnd) {
 		
 		if (checkIsValid(question)) {
