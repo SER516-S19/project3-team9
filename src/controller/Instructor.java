@@ -1,24 +1,33 @@
+
 package src.controller;
 
 import java.util.ArrayList;
 import src.model.Question;
-import src.view.MakeQuestionView;;
+import src.view.MakeQuestionView;
+import src.view.ProfTitleView;;
 
 /**
  * The controller of the inputs from user including store question
  * and write the quiz into the JSON file.
  *
- * @author Yu-Ting Tsao
+ * @author Yu-Ting Tsao, Xiangwei Zheng
  * @version 1.0
  */
 public class Instructor {
 	
 	private MakeQuestionView frame;
+	private ProfTitleView frame_title;
 	private ArrayList<Question> questions;
 	
 	public Instructor() {
 		questions = new ArrayList<Question>();
-		frame = new MakeQuestionView(this);
+
+		frame_title = new ProfTitleView(this);
+		frame_title.setVisible(true);
+	}
+	
+	public void gotoQuestion(String quiztitle, Boolean gotoQues) {
+	    frame = new MakeQuestionView(this);
 		frame.setVisible(true);
 	}
 
