@@ -155,6 +155,15 @@ public class MakeQuestionView extends JFrame {
 		createButton.setBounds(577, 543, 117, 29);
 		contentPane.add(createButton);
 		
+		JButton exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.exitQuiz(true);
+			}
+		});
+		exitButton.setBounds(697, 543, 60, 29);
+		contentPane.add(exitButton);
+		
 		optionARadioButton = new JRadioButton("A.");
 		optionARadioButton.setSelected(true);
 		optionARadioButton.setBounds(19, 164, 141, 23);
