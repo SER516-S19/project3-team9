@@ -18,9 +18,7 @@ import src.controller.Instructor;
  * @author Xiangwei Zheng
  * @version 1.0
  */
-public class ProfTitleView extends JFrame {
-
-	private static final String FRAME_TITLE = "Quiz Monster";
+public class ProfTitleView extends JPanel {
 	
 	private JLabel quizTitle;
 	private JTextArea questionTextArea;
@@ -30,56 +28,46 @@ public class ProfTitleView extends JFrame {
 	
 	public ProfTitleView(Instructor c) {		
 		this.controller = c;		
-		this.setTitle(FRAME_TITLE);		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(350, 50, 700, 600);
 		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);		
-		setupTextArea(contentPane);
-		setupLabel(contentPane);
-		setupButton(contentPane);		
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
+		setupTextArea();
+		setupLabel();
+		setupButton();		
 	}
 	
-	
-	
-
-	
-	private void setupTextArea(JPanel contentPane) {
+	private void setupTextArea() {
 		
 		questionTextArea = new JTextArea();
 		questionTextArea.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		questionTextArea.setBounds(19, 84, 662, 68);
 		questionTextArea.setLineWrap(true);
-		contentPane.add(questionTextArea);
-		
-		
+		this.add(questionTextArea);
 	}
 	
-	private void setupLabel(JPanel contentPane) {
+	private void setupLabel() {
 		
 		quizTitle = new JLabel("Quiz Title");
 		quizTitle.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		quizTitle.setBounds(19, 61, 678, 16);
-		contentPane.add(quizTitle);
+		this.add(quizTitle);
 		
 		JLabel titleLabel = new JLabel("Pleae Enter Quiz Title Below");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		titleLabel.setBounds(19, 6, 662, 43);
-		contentPane.add(titleLabel);
+		this.add(titleLabel);
 	} 
 	
-	private void setupButton(JPanel contentPane) {
+	private void setupButton() {
 		
 		JButton gotoQuesButton = new JButton("Go To Question");
 		gotoQuesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.gotoQuestion(quizTitle.getText(), false);
+				controller.gotoQuestion(questionTextArea.getText(), false);
 			}
 		});
 		gotoQuesButton.setBounds(385, 543, 180, 29);
-		contentPane.add(gotoQuesButton);
+		this.add(gotoQuesButton);
 		
 		JButton exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ActionListener() {
@@ -88,12 +76,6 @@ public class ProfTitleView extends JFrame {
 			}
 		});
 		exitButton.setBounds(577, 543, 117, 29);
-		contentPane.add(exitButton);
-		
-		
-		
-
-	} 
-	
-	
+		this.add(exitButton);
+	} 	
 }
