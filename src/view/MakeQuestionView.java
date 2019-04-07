@@ -3,6 +3,7 @@ package src.view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
@@ -27,10 +28,7 @@ public class MakeQuestionView extends JPanel {
 	
 	private JLabel questionNumerLabel;
 	private JTextArea questionTextArea;
-	private JTextArea optionATextArea;
-	private JTextArea optionBTextArea;
-	private JTextArea optionCTextArea;
-	private JTextArea optionDTextArea;
+	private ArrayList<JTextArea> optionTextAreas;
 	private ButtonGroup answerButtonGroup;
 	private AbstractButton optionARadioButton;
 	
@@ -40,6 +38,7 @@ public class MakeQuestionView extends JPanel {
 		
 		this.controller = c;
 		this.setLayout(null);
+		
 		setupTextArea();
 		setupLabel(title);
 		setupButton();
@@ -49,10 +48,9 @@ public class MakeQuestionView extends JPanel {
 	public void refreshPage(int questionNo) {
 		questionNumerLabel.setText("Question " + questionNo  + ".");
 		questionTextArea.setText(null);
-		optionATextArea.setText(null);
-		optionBTextArea.setText(null);
-		optionCTextArea.setText(null);
-		optionDTextArea.setText(null);
+		for(JTextArea option: optionTextAreas){
+			option.setText(null);
+		}
 		optionARadioButton.setSelected(true);
 	}
 	
@@ -64,13 +62,15 @@ public class MakeQuestionView extends JPanel {
 		for(int i = 0; i<answerButtonGroup.getButtonCount(); i++) {
 			AbstractButton button = (AbstractButton)elements.nextElement();
 			if (button.isSelected() == true) {
-				q = new Question(
-					questionTextArea.getText(), 
-					optionATextArea.getText(), 
-					optionBTextArea.getText(), 
-					optionCTextArea.getText(), 
-					optionDTextArea.getText(), 
-					(short) i);
+				String[] options = new String[4];
+				options[0] = optionTextAreas.get(0).getText();
+				options[1] = optionTextAreas.get(1).getText();
+				options[2] = optionTextAreas.get(2).getText();
+				options[3] = optionTextAreas.get(3).getText();
+				
+				q = new Question(questionTextArea.getText(),
+						options,
+						optionTextAreas.get(i).getText());
 			}
 		}
 		return q;
@@ -78,35 +78,41 @@ public class MakeQuestionView extends JPanel {
 	
 	private void setupTextArea() {
 		
+		optionTextAreas = new ArrayList<JTextArea>();
+		
 		questionTextArea = new JTextArea();
 		questionTextArea.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		questionTextArea.setBounds(19, 84, 662, 68);
 		questionTextArea.setLineWrap(true);
 		add(questionTextArea);
 		
-		optionATextArea = new JTextArea();
+		JTextArea optionATextArea = new JTextArea();
 		optionATextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionATextArea.setBounds(19, 199, 662, 44);
 		optionATextArea.setLineWrap(true);
 		add(optionATextArea);
+		optionTextAreas.add(optionATextArea);
 		
-		optionBTextArea = new JTextArea();
+		JTextArea optionBTextArea = new JTextArea();
 		optionBTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionBTextArea.setBounds(19, 294, 662, 44);
 		optionBTextArea.setLineWrap(true);
 		add(optionBTextArea);
+		optionTextAreas.add(optionBTextArea);
 		
-		optionCTextArea = new JTextArea();
+		JTextArea optionCTextArea = new JTextArea();
 		optionCTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionCTextArea.setBounds(19, 394, 662, 44);
 		optionCTextArea.setLineWrap(true);
 		add(optionCTextArea);
+		optionTextAreas.add(optionCTextArea);
 		
-		optionDTextArea = new JTextArea();
+		JTextArea optionDTextArea = new JTextArea();
 		optionDTextArea.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		optionDTextArea.setBounds(19, 485, 662, 44);
 		optionDTextArea.setLineWrap(true);
 		add(optionDTextArea);
+		optionTextAreas.add(optionDTextArea);
 	}
 	
 	private void setupLabel(String title) {
