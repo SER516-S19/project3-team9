@@ -29,8 +29,7 @@ public class Instructor {
 		questions = new ArrayList<Question>();
 		setupFrame();
 		landingPage();
-		//editTitlePage();
-	}
+		}
 	
 	private void setupFrame() {
 		profFrame = new JFrame();
