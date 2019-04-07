@@ -1,4 +1,3 @@
-
 package src.controller;
 
 import java.util.ArrayList;
@@ -7,14 +6,15 @@ import javax.swing.JFrame;
 
 import src.model.Question;
 import src.view.MakeQuestionView;
-import src.view.ProfTitleView;;
+import src.view.ProfTitleView;
+import src.view.ProfLandingView;
 
 /**
  * The controller of the inputs from user including store question
  * and write the quiz into the JSON file.
  *
- * @author Yu-Ting Tsao, Xiangwei Zheng
- * @version 1.0
+ * @author Yu-Ting Tsao, Xiangwei Zheng, Aditya Vikram
+ * @version 1.1
  */
 public class Instructor {
 	
@@ -28,8 +28,8 @@ public class Instructor {
 	public Instructor() {
 		questions = new ArrayList<Question>();
 		setupFrame();
-		editTitlePage();
-	}
+		landingPage();
+		}
 	
 	private void setupFrame() {
 		profFrame = new JFrame();
@@ -39,7 +39,12 @@ public class Instructor {
 		profFrame.setVisible(true);
 	}
 	
-	private void editTitlePage() {
+	private void landingPage() {
+		ProfLandingView landingPanel = new ProfLandingView(this);
+		profFrame.setContentPane(landingPanel);
+	}
+	
+	public void editTitlePage() {
 		ProfTitleView titlePanel = new ProfTitleView(this);
 		profFrame.setContentPane(titlePanel);
 	}
