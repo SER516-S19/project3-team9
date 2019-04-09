@@ -3,6 +3,7 @@ package src.controller;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import src.model.Question;
 import src.view.MakeQuestionView;
@@ -47,6 +48,7 @@ public class Instructor {
 	public void editTitlePage() {
 		ProfTitleView titlePanel = new ProfTitleView(this);
 		profFrame.setContentPane(titlePanel);
+		profFrame.revalidate();
 	}
 	
 	public void gotoQuestion(String quizTitle, Boolean gotoQues) {
@@ -63,7 +65,7 @@ public class Instructor {
 		if (checkIsValid(question)) {
 			questions.add(question);
 		} else {
-			// TODO Alert
+			JOptionPane.showMessageDialog(null, "Empty Q&A Detected...");
 			return;
 		}
 		if (isEnd) {
@@ -74,12 +76,28 @@ public class Instructor {
 	}
 	
 	private void writeQuizToFilePath(String path) {
-		System.out.println("My store path: " + path);
-		// TODO Go to firework finish page!!!!!
+		int input = JOptionPane.showOptionDialog(null, 
+				"Save it now?", "Hint", 
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE,
+				null, null, null);
+		if(input == JOptionPane.OK_OPTION) {
+			ProfLandingView landingPanel = new ProfLandingView(this);
+			profFrame.setContentPane(landingPanel);
+			profFrame.revalidate();
+			System.out.println("My store path: " + path);
+			return;
+		}
 	}
 	
 	private Boolean checkIsValid(Question question) {
-		// TODO Check empty or not for fields.
+		if (	question.getTitle().equals("") |
+				question.getOption1().equals("") | 
+				question.getOption2().equals("") |
+				question.getOption3().equals("") |
+				question.getOption4().equals("")) {
+			return false;
+		}
 		return true;
 	}
 }
