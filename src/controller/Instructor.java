@@ -4,22 +4,28 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import src.model.Question;
+import src.model.Quiz;
 import src.view.MakeQuestionView;
-import src.view.ProfTitleView;
 import src.view.ProfLandingView;
+import src.view.ProfTitleView;
 
 /**
  * The controller of the inputs from user including store question and write the
  * quiz into the JSON file.
  *
- * @author Yu-Ting Tsao, Xiangwei Zheng, Aditya Vikram
- * @version 1.1
+ * @author Yu-Ting Tsao, Xiangwei Zheng, Aditya Vikram, Shivam Verma
+ * @version 1.2
  */
 public class Instructor {
 	
+	private final String FOLDER_PATH = "./quizzes/";
 	private JFrame profFrame;
 	private MakeQuestionView makeQuestionPanel;
 	
@@ -70,28 +76,27 @@ public class Instructor {
 		}
 
 		if (isEnd) {
-			writeQuizToFilePath("Store/quiz/somewhere/as/json/string.");
+			writeQuizToFilePath(makeQuestionPanel.getTitle());
 		} else {
 			makeQuestionPanel.refreshPage(questions.size() + 1);
-		}
+		} 
 	}
 
-	private void writeQuizToFilePath(String path) {
-////		Quiz quiz = new Quiz("Test1", questions);
-////		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//		String json = gson.toJson(quiz);
-//		System.out.println(json);
-//		try {
-//			File file = new File("./quizzes/Test1.json");
-//			FileWriter writer = new FileWriter(file);
-//			writer.write(json);
-//			writer.close();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		System.out.println("My store path: " + path);
-		// TODO Go to firework finish page!!!!!
+	private void writeQuizToFilePath(String quizTitle) {
+		String filename = FOLDER_PATH + quizTitle + ".json";
+		Quiz quiz = new Quiz(questions);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(quiz);
+		System.out.println(json);
+		try {
+			File file = new File(filename);
+			FileWriter writer = new FileWriter(file);
+			writer.write(json);
+			writer.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Boolean checkIsValid(Question question) {

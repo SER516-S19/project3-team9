@@ -75,7 +75,7 @@ public class QuizReader {
 
             questionList.add(question);
         }
-        return new Quiz(quizName, questionList);
+        return new Quiz(questionList);
     }
 
     /**
