@@ -48,7 +48,7 @@ public class Instructor {
 		profFrame.setVisible(true);
 	}
 	
-	private void landingPage() {
+	public void landingPage() {
 		ProfLandingView landingPanel = new ProfLandingView(this);
 		profFrame.setContentPane(landingPanel);
 	}
@@ -57,7 +57,7 @@ public class Instructor {
 		ProfTitleView titlePanel = new ProfTitleView(this);
 		profFrame.setContentPane(titlePanel);
 	}
-	
+
 	public void gotoQuestion(String quizTitle, Boolean gotoQues) {
 		makeQuestionPanel = new MakeQuestionView(quizTitle, this);
 		profFrame.setContentPane(makeQuestionPanel);
@@ -80,6 +80,7 @@ public class Instructor {
 			writeQuizToFilePath(makeQuestionPanel.getTitle());
 			JOptionPane.showMessageDialog(new JFrame(), "Quiz Created",
 					"Message", JOptionPane.INFORMATION_MESSAGE);
+			makeQuestionPanel.navigatePage();
 		} else {
 			makeQuestionPanel.refreshPage(questions.size() + 1);
 		} 
