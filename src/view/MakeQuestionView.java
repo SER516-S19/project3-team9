@@ -31,14 +31,23 @@ public class MakeQuestionView extends JPanel {
 	private ArrayList<JTextArea> optionTextAreas;
 	private ButtonGroup answerButtonGroup;
 	private AbstractButton optionARadioButton;
+	private String title;
 	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	private Instructor controller;
 	
 	public MakeQuestionView(String title, Instructor c) {
 		
 		this.controller = c;
 		this.setLayout(null);
-		
+		this.setTitle(title);
 		setupTextArea();
 		setupLabel(title);
 		setupButton();
