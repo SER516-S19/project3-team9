@@ -3,14 +3,14 @@ package src.model;
 /**
  * Class to store all the information regarding a single question.
  *
- * @author Sarthak Tiwari
- * @version 2.0
+ * @author Sarthak Tiwari, Shivam Verma
+ * @version 2.1
  */
 public class Question {
 
     private String title;
     private String[] options;
-    private String correctOption;
+    private String correctAnswer;
 
     /** Default Empty Constructor. */
     public Question() {
@@ -164,14 +164,14 @@ public class Question {
      */
     @Deprecated
     public void setCorrectOption(final short optionNumber) {
-        correctOption = options[optionNumber - 1];
+        correctAnswer = options[optionNumber - 1];
     }
 
     /**
      * @param correctOptionInput : String correct option of question
      */
     public void setCorrectOption(final String correctOptionInput) {
-        correctOption = correctOptionInput;
+        correctAnswer = correctOptionInput;
     }
 
     /**
@@ -182,7 +182,7 @@ public class Question {
     public short getCorrectOption() {
 
         for (short i = 0; i < options.length; i++) {
-            if (options[i].equals(correctOption)) {
+            if (options[i].equals(correctAnswer)) {
                 return (short) (i + 1);
             }
         }
@@ -193,7 +193,7 @@ public class Question {
      * @return String : correct option of the question
      */
     public String getCorrectOptionText() {
-        return correctOption;
+        return correctAnswer;
     }
 
 }
