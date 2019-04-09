@@ -8,6 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import java.awt.Component;
 
+
+/**
+ * Class create drop down menu for quizzes
+ *
+ * @author Shashidhar Reddy Vanteru
+ * 
+ */
+
 public class SelectQuizTitle {
 
 	SelectQuizTitle() {
