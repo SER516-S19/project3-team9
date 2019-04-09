@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -77,6 +78,8 @@ public class Instructor {
 
 		if (isEnd) {
 			writeQuizToFilePath(makeQuestionPanel.getTitle());
+			JOptionPane.showMessageDialog(new JFrame(), "Quiz Created",
+					"Message", JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			makeQuestionPanel.refreshPage(questions.size() + 1);
 		} 
