@@ -31,8 +31,8 @@ public class ProfTitleView extends JPanel {
 		setBounds(350, 50, 700, 600);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));	
-		setupTextArea();
 		setupLabel();
+		setupTextArea();		
 		setupButton();		
 	}
 	
@@ -51,11 +51,6 @@ public class ProfTitleView extends JPanel {
 		quizTitle.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		quizTitle.setBounds(19, 61, 678, 16);
 		this.add(quizTitle);
-		
-		JLabel titleLabel = new JLabel("Please Enter Quiz Title");
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		titleLabel.setBounds(19, 6, 662, 43);
-		this.add(titleLabel);
 	} 
 	
 	private void setupButton() {
