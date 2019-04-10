@@ -21,8 +21,8 @@ import src.model.Question;
 /**
  * View for professor to create a question and its options.
  *
- * @author Yu-Ting Tsao
- * @version 1.0
+ * @author Yu-Ting Tsao, Aditya Vikram
+ * @version 1.1
  */
 public class MakeQuestionView extends JPanel {
 	
@@ -203,5 +203,11 @@ public class MakeQuestionView extends JPanel {
 		JSeparator separatorCD = new JSeparator();
 		separatorCD.setBounds(6, 450, 688, 12);
 		add(separatorCD);
+	}
+
+	public void navigatePage() {
+		
+		this.setVisible(false);
+		controller.landingPage();	
 	}
 }
