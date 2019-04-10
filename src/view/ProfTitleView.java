@@ -52,7 +52,7 @@ public class ProfTitleView extends JPanel {
 		quizTitle.setBounds(19, 61, 678, 16);
 		this.add(quizTitle);
 		
-		JLabel titleLabel = new JLabel("Pleae Enter Quiz Title Below");
+		JLabel titleLabel = new JLabel("Please Enter Quiz Title");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		titleLabel.setBounds(19, 6, 662, 43);
 		this.add(titleLabel);
