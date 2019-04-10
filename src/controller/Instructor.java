@@ -72,39 +72,50 @@ public class Instructor {
 		if (checkIsValid(question)) {
 			questions.add(question);
 		} else {
-			// TODO Alert
+			JOptionPane.showMessageDialog(null, "Empty Q&A Detected...");
 			return;
 		}
-
 		if (isEnd) {
 			writeQuizToFilePath(makeQuestionPanel.getTitle());
-			JOptionPane.showMessageDialog(new JFrame(), "Quiz Created",
-					"Message", JOptionPane.INFORMATION_MESSAGE);
-			makeQuestionPanel.navigatePage();
 		} else {
 			makeQuestionPanel.refreshPage(questions.size() + 1);
 		} 
 	}
 
 	private void writeQuizToFilePath(String quizTitle) {
-		String filename = FOLDER_PATH + quizTitle + ".json";
-		Quiz quiz = new Quiz(questions);
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String json = gson.toJson(quiz);
-		System.out.println(json);
-		try {
-			File file = new File(filename);
-			FileWriter writer = new FileWriter(file);
-			writer.write(json);
-			writer.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		int input = JOptionPane.showOptionDialog(null, 
+				"Save it now?", "Hint", 
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE,
+				null, null, null);
+		if(input == JOptionPane.OK_OPTION) {
+			String filename = FOLDER_PATH + quizTitle + ".json";
+			Quiz quiz = new Quiz(questions);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String json = gson.toJson(quiz);
+			try {
+				File file = new File(filename);
+				FileWriter writer = new FileWriter(file);
+				writer.write(json);
+				writer.close();
+				ProfLandingView landingPanel = new ProfLandingView(this);
+				profFrame.setContentPane(landingPanel);
+				profFrame.revalidate();
+			} catch (IOException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Something goes wrong... Not save.");
+			}
 		}
 	}
 
 	private Boolean checkIsValid(Question question) {
-		// TODO Check empty or not for fields.
+		if (	question.getTitle().equals("") |
+				question.getOption1().equals("") | 
+				question.getOption2().equals("") |
+				question.getOption3().equals("") |
+				question.getOption4().equals("")) {
+			return false;
+		}
 		return true;
 	}
 }

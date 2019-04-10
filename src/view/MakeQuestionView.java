@@ -204,10 +204,4 @@ public class MakeQuestionView extends JPanel {
 		separatorCD.setBounds(6, 450, 688, 12);
 		add(separatorCD);
 	}
-
-	public void navigatePage() {
-		
-		this.setVisible(false);
-		controller.landingPage();	
-	}
 }
