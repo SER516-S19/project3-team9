@@ -20,11 +20,6 @@ import src.view.SelectQuizTitle;;
  * @author      Jiayan Wang
  * @version     1.0
  */
-
-/**
- * @author JW
- *
- */
 public class QuizChecker {
 	private ArrayList<String> quizzes;
 	private LinkedBlockingQueue<Question> questions;
