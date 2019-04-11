@@ -3,11 +3,8 @@ package src.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 import src.model.Question;
 import src.model.Quiz;
 import src.utility.QuizReader;
@@ -15,8 +12,8 @@ import src.view.QuestionAttemptTemplate;
 import src.view.QuizList;
 import src.view.SelectQuizTitle;;
 /**
- * students can try questions until they answered all questions, 
- * and if their answer is wrong, they can retry this question.
+ * This is the controller class which creates all view components
+ * and control the transition between all views.
  * @author      Jiayan Wang
  * @version     1.0
  */
@@ -35,10 +32,11 @@ public class QuizChecker {
 	
 	public QuizChecker(QuizReader qr,JFrame frame, QuizList qlist){
 		quiz_list = qlist;
-		quiz_reader = qr;
 		quizzes = qlist.readQuizList();
-		questions = new LinkedBlockingQueue<Question>();
+		quiz_reader = qr;
 		this.frame = frame;
+		questions = new LinkedBlockingQueue<Question>();
+		quiz_title = new SelectQuizTitle(frame,this);
 	}
 	
 	/**
@@ -54,29 +52,30 @@ public class QuizChecker {
 			} else {
 				 flag = QuestionAttemptTemplate.showQuestion(frame, question);
 			}
-				 if(flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
-					 System.out.println("correct");
-					 sendQuestions();
-				 } else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER){
-					 System.out.println("incorrect");
-					 questions.add(question);
-					 sendQuestions();
-				 } else if(flag == QuestionAttemptTemplate.GAVE_UP) {
-					 System.out.println("giveup");
-				 }
+			
+			if(flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
+				sendQuestions();
+			} else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER){
+				questions.add(question);
+				sendQuestions();
+			} else if(flag == QuestionAttemptTemplate.GAVE_UP) {
+				frame.setVisible(true);
+				quiz_title.Show();
+			}
 		}
 	}
   
 	/**
-	 * This method get the quiz title from the QuizTitle class,
-	 * and then get the quiz object which has same title in the quiz list.
-	 * Based on this quiz object, it will initialize the questions queue
+	 * This method get the selected quiz title from the QuizTitle class,
+	 * and then get the quiz object based on the quiz title.
+	 * Then, it will initialize the questions queue from quiz object
 	 * and send this questions queue to the Question template.
 	 * 
 	 * @param title it will be sent by the QuizTitle class
 	 */
 	public void selectedTitle(String title) {
-		System.out.println("get selected title " + title);
+		frame.setVisible(false);
+		questions.clear();
 		try {
 			Quiz quiz = quiz_reader.readQuiz(title);
 			ArrayList<Question> question_list = quiz.getQuestions();
@@ -91,15 +90,15 @@ public class QuizChecker {
 	}
 	
 	/**
-	 * run the select title UI.
+	 *  return to the select title screen.
 	 */
-	public void run() {
-		quiz_title = new SelectQuizTitle(frame,this);
+	public void returnToTitle() {
+		quiz_title.Show();
 	}
 
 	/**
 	 * get the quiz's title.
-	 * @return the quiz titles from quizReader
+	 * @return the quiz's titles get from quizReader
 	 */
 	public ArrayList<String> getQuizzes() {
 		return quizzes;
