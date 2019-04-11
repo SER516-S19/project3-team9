@@ -1,7 +1,5 @@
 package src.controller;
 
-
-import java.awt.Component;
 import java.awt.Container;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +11,8 @@ import src.utility.QuizReader;
 import src.view.EndOfTheQuiz;
 import src.view.QuestionAttemptTemplate;
 import src.view.QuizList;
-import src.view.SelectQuizTitle;;
+import src.view.SelectQuizTitle;
+
 /**
  * This is the controller class which creates all view components
  * and control the transition between all views.
@@ -26,11 +25,9 @@ public class QuizChecker {
 	private SelectQuizTitle quiz_title;
 	private EndOfTheQuiz quiz_end;
 	private QuizReader quiz_reader;
-	private QuizList quiz_list;
 	private JFrame frame;
 	
 	public QuizChecker(QuizReader qr,JFrame frame, QuizList qlist){
-		quiz_list = qlist;
 		quizzes = qlist.readQuizList();
 		quiz_reader = qr;
 		this.frame = frame;
@@ -107,7 +104,6 @@ public class QuizChecker {
 	 *  return to the select title screen.
 	 */
 	public void returnToTitle() {
-		System.out.println("11");
 		frame.remove(quiz_end);
 		showScreen(quiz_title);
 	}
