@@ -53,9 +53,5 @@ public class EndOfTheQuiz extends JFrame {
 		        });
                 jf.add(contentPane);
                  jf.validate();
-            
-	    }
-	
-	
-	  }
-
+             }
+	}
