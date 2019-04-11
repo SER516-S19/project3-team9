@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import src.model.Question;
 import src.model.Quiz;
 import src.utility.QuizReader;
+import src.view.EndOfTheQuiz;
 import src.view.QuestionAttemptTemplate;
 import src.view.QuizList;
 import src.view.SelectQuizTitle;
@@ -26,6 +27,7 @@ public class QuizChecker {
 	private LinkedBlockingQueue<Question> questions;
 	private SelectQuizTitle quiz_title;
 	private QuizReader quiz_reader;
+	private EndOfTheQuiz end_quiz;
 	private JFrame frame;
 
 	public QuizChecker(QuizReader qr, JFrame frame, QuizList qlist) {
@@ -33,6 +35,7 @@ public class QuizChecker {
 		quiz_reader = qr;
 		this.frame = frame;
 		questions = new LinkedBlockingQueue<Question>();
+		end_quiz = new EndOfTheQuiz(this, frame);
 		quiz_title = new SelectQuizTitle(frame, this);
 	}
 
@@ -57,7 +60,7 @@ public class QuizChecker {
 				sendQuestions();
 			} else if (flag == QuestionAttemptTemplate.GAVE_UP) {
 				frame.setVisible(true);
-				quiz_title.Show();
+				quiz_title.show();
 			}
 		}
 	}
@@ -90,7 +93,7 @@ public class QuizChecker {
 	 * return to the select title screen.
 	 */
 	public void returnToTitle() {
-		quiz_title.Show();
+		quiz_title.show();
 	}
 
 	/**

@@ -17,6 +17,7 @@ import src.controller.QuizChecker;
  * Class create drop down menu for quizzes
  *
  * @author Shashidhar Reddy Vanteru,Jiayan Wang
+ * @version 1.3
  * 
  */
 public class SelectQuizTitle {
@@ -52,15 +53,14 @@ public class SelectQuizTitle {
 				Qc.selectedTitle(x);
 			}
 		});
-
-		Show();
+		show();
 	}
 
 	/**
 	 * add this screen to the frame, and this screen can also show it again after
 	 * controller called.
 	 */
-	public void Show() {
+	public void show() {
 		quiz.add(quizpanel);
 		quiz.validate();
 	}
