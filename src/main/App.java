@@ -12,8 +12,8 @@ import src.view.QuizList;
 /**
  * Entry point of application.
  *
- * @author Shivam Verma
- * @version 1.0
+ * @author Shivam Verma, Aditya Vikram
+ * @version 1.1
  */
 
 public class App {
@@ -29,14 +29,14 @@ public class App {
 
 	public static void main(String args[]) {
 
-		String filename = args[0];
+		String folderpath = args[0];
 		String app = args[1];
 
 		if (app.equals("P")) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						new Instructor(filename);
+						new Instructor(folderpath);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -54,7 +54,7 @@ public class App {
 
 			QuizReader quizReader = new QuizReader();
 			QuizList quizList = new QuizList();
-			new QuizChecker(quizReader, studentFrame, quizList);
+			new QuizChecker(quizReader, studentFrame, quizList, folderpath);
 
 			studentFrame.setVisible(true);
 		}

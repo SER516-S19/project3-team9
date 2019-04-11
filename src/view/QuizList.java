@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class QuizList {
-	private final String FOLDER_PATH = "./quizzes/";
 	private ArrayList<String> quizList;
 
 	/**
@@ -27,8 +26,8 @@ public class QuizList {
 	 * 
 	 * @return String ArrayList of the names of each quiz
 	 */
-	public ArrayList<String> readQuizList() {
-		File folder = new File(FOLDER_PATH);
+	public ArrayList<String> readQuizList(String folderPath) {
+		File folder = new File(folderPath);
 		File[] fileList = folder.listFiles();
 
 		for (int i = 0; i < fileList.length; i++) {
