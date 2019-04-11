@@ -22,24 +22,23 @@ import src.view.ProfTitleView;
  * quiz into the JSON file.
  *
  * @author Yu-Ting Tsao, Xiangwei Zheng, Aditya Vikram, Shivam Verma
- * @version 1.2
+ * @version 1.3
  */
 public class Instructor {
-	
-	private final String FOLDER_PATH = "./quizzes/";
+
 	private JFrame profFrame;
 	private MakeQuestionView makeQuestionPanel;
-	
 	private ArrayList<Question> questions;
-	
 	private static final String FRAME_TITLE = "Quiz Monster";
-	
-	public Instructor() {
+	private String filename;
+
+	public Instructor(String filename) {
+		this.filename = filename;
 		questions = new ArrayList<Question>();
 		setupFrame();
 		landingPage();
-		}
-	
+	}
+
 	private void setupFrame() {
 		profFrame = new JFrame();
 		profFrame.setTitle(FRAME_TITLE);
@@ -47,12 +46,12 @@ public class Instructor {
 		profFrame.setBounds(350, 50, 700, 600);
 		profFrame.setVisible(true);
 	}
-	
+
 	public void landingPage() {
 		ProfLandingView landingPanel = new ProfLandingView(this);
 		profFrame.setContentPane(landingPanel);
 	}
-	
+
 	public void editTitlePage() {
 		ProfTitleView titlePanel = new ProfTitleView(this);
 		profFrame.setContentPane(titlePanel);
@@ -67,7 +66,7 @@ public class Instructor {
 	public void exitQuiz(Boolean exitQuiz) {
 		System.exit(0);
 	}
-	
+
 	public void storeQuestion(Question question, Boolean isEnd) {
 		if (checkIsValid(question)) {
 			questions.add(question);
@@ -79,17 +78,14 @@ public class Instructor {
 			writeQuizToFilePath(makeQuestionPanel.getTitle());
 		} else {
 			makeQuestionPanel.refreshPage(questions.size() + 1);
-		} 
+		}
 	}
 
 	private void writeQuizToFilePath(String quizTitle) {
-		int input = JOptionPane.showOptionDialog(null, 
-				"Save it now?", "Hint", 
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.INFORMATION_MESSAGE,
-				null, null, null);
-		if(input == JOptionPane.OK_OPTION) {
-			String filename = FOLDER_PATH + quizTitle + ".json";
+		int input = JOptionPane.showOptionDialog(null, "Save it now?", "Hint", JOptionPane.YES_NO_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, null, null);
+		if (input == JOptionPane.OK_OPTION) {
+			filename = filename + quizTitle + ".json";
 			Quiz quiz = new Quiz(questions);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(quiz);
@@ -109,11 +105,8 @@ public class Instructor {
 	}
 
 	private Boolean checkIsValid(Question question) {
-		if (	question.getTitle().equals("") |
-				question.getOption1().equals("") | 
-				question.getOption2().equals("") |
-				question.getOption3().equals("") |
-				question.getOption4().equals("")) {
+		if (question.getTitle().equals("") | question.getOption1().equals("") | question.getOption2().equals("")
+				| question.getOption3().equals("") | question.getOption4().equals("")) {
 			return false;
 		}
 		return true;

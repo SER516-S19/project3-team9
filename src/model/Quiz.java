@@ -30,11 +30,11 @@ public class Quiz {
 	public void setQuestions(ArrayList<Question> questions) {
 		this.questions = questions;
 	}
-	
+
 	/**
-	* @return List<Question> : list of object of type Question
-	*/	
-	
+	 * @return List<Question> : list of object of type Question
+	 */
+
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}

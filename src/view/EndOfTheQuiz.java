@@ -15,7 +15,7 @@ import src.controller.QuizChecker;
 /**
  * View for student to navigate to home page after the completion of the quiz.
  *
- * @author Bhavana Vakkalagadda 
+ * @author Bhavana Vakkalagadda
  * @version 1.0
  */
 
