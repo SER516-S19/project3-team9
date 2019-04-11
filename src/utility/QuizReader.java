@@ -19,7 +19,6 @@ import src.model.Quiz;
  * @verson 1.0
  */
 public class QuizReader {
-	private final String FOLDER_PATH = "./quizzes/";
 
 	/**
 	 * Constructor for the QuizReader class
@@ -36,8 +35,8 @@ public class QuizReader {
 	 *                 no ".json")
 	 * @throws IOException
 	 */
-	public Quiz readQuiz(String quizName) throws IOException {
-		String filename = FOLDER_PATH + quizName + ".json";
+	public Quiz readQuiz(String quizName, String folderPath) throws IOException {
+		String filename = folderPath + quizName + ".json";
 		File folder = new File(filename);
 		System.out.println(folder.getAbsolutePath());
 		JsonReader reader = new JsonReader(new FileReader(filename));

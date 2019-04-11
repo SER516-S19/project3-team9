@@ -50,7 +50,7 @@ public class SelectQuizTitle {
 
 			public void actionPerformed(ActionEvent e) {
 				String x = String.valueOf(menu.getSelectedItem());
-				Qc.selectedTitle(x);
+				Qc.selectedTitle(x, Qc.getFolderPath());
 			}
 		});
 		show();

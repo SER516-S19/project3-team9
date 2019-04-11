@@ -29,14 +29,24 @@ public class QuizChecker {
 	private QuizReader quiz_reader;
 	private EndOfTheQuiz end_quiz;
 	private JFrame frame;
+	private String folderPath;
 
-	public QuizChecker(QuizReader qr, JFrame frame, QuizList qlist) {
-		quizzes = qlist.readQuizList();
+	public String getFolderPath() {
+		return folderPath;
+	}
+
+	public void setFolderPath(String folderPath) {
+		this.folderPath = folderPath;
+	}
+
+	public QuizChecker(QuizReader qr, JFrame frame, QuizList qlist, String folderPath) {
+		quizzes = qlist.readQuizList(folderPath);
 		quiz_reader = qr;
 		this.frame = frame;
 		questions = new LinkedBlockingQueue<Question>();
 		end_quiz = new EndOfTheQuiz(this, frame);
 		quiz_title = new SelectQuizTitle(frame, this);
+		this.folderPath = folderPath;
 	}
 
 	/**
@@ -73,11 +83,11 @@ public class QuizChecker {
 	 * 
 	 * @param title it will be sent by the QuizTitle class
 	 */
-	public void selectedTitle(String title) {
+	public void selectedTitle(String title, String folderPath) {
 		frame.setVisible(false);
 		questions.clear();
 		try {
-			Quiz quiz = quiz_reader.readQuiz(title);
+			Quiz quiz = quiz_reader.readQuiz(title, folderPath);
 			ArrayList<Question> question_list = quiz.getQuestions();
 			for (Question q : question_list) {
 				questions.add(q);
