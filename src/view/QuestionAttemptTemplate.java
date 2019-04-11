@@ -1,6 +1,7 @@
 package src.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -21,266 +23,284 @@ import javax.swing.border.EmptyBorder;
 import src.model.Question;
 
 /**
- * Form to show a question and navaigation buttion and to give user
- * functionality to select one of the options.
+ * Form to show a question and navigation button and to give user functionality
+ * to select one of the options.
  *
  * @author Sarthak Tiwari
- * @version 1.0
+ * @version 2.0
  */
 public final class QuestionAttemptTemplate extends JDialog {
 
-    private static QuestionAttemptTemplate instance = null;
+	/** Instance of this class to maintain singleton pattern. */
+	private static QuestionAttemptTemplate instance = null;
 
-    private static JLabel questionDescription;
+	private static JLabel questionDescription;
 
-    private static JRadioButton option1;
-    private static JRadioButton option2;
-    private static JRadioButton option3;
-    private static JRadioButton option4;
-    private static ButtonGroup options;
+	private static JRadioButton[] radioButtons;
 
-    private static JButton next;
-    private static JButton giveup;
+	private static JButton next;
 
-    private static short correctAnswer = 0;
-    private static int responseStatus;
+	private static short correctAnswer = 0;
+	private static int responseStatus;
 
-    public static final int CORRECT_ANSWER = 0;
-    public static final int INCORRECT_ANSWER = 1;
-    public static final int GAVE_UP = -1;
+	private static final Color BACKGROUND_COLOR = new Color(217, 225, 242);
 
-    /**
-     * public method to show the view.
-     *
-     * @param frame    : JFrame representing the parent frame
-     * @param question : QuestionStub representing the question to be displayed
-     * @return int : one of the three values representing student gave correct
-     *         answer, incorrect answer or gave up
-     */
-    public static int showQuestion(final JFrame frame,
-                                    final Question question) {
+	public static final int CORRECT_ANSWER = 0;
+	public static final int INCORRECT_ANSWER = 1;
+	public static final int GAVE_UP = -1;
 
-        if (instance == null) {
-            instance = new QuestionAttemptTemplate(frame);
-        }
+	/**
+	 * public method to show the view.
+	 *
+	 * @param frame : JFrame representing the parent frame
+	 * @param question : QuestionStub representing the question to be
+	 * displayed
+	 * @return int : one of the three values representing student gave
+	 * correct answer, incorrect answer or gave up
+	 */
+	public static int showQuestion(final JFrame frame,
+			final Question question) {
 
-        questionDescription.setText(
-                    convertToMultiline(question.getDescription()));
-        option1.setText(convertToMultiline(question.getOption1()));
-        option2.setText(convertToMultiline(question.getOption2()));
-        option3.setText(convertToMultiline(question.getOption3()));
-        option4.setText(convertToMultiline(question.getOption4()));
+		if (instance == null) {
+			instance = new QuestionAttemptTemplate(frame);
+		}
 
-        correctAnswer = question.getCorrectOption();
+		questionDescription.setText(
+				convertToMultiline(question.getTitle()));
+		radioButtons[0].setText(
+				convertToMultiline(question.getOption1()));
+		radioButtons[1].setText(
+				convertToMultiline(question.getOption2()));
+		radioButtons[2].setText(
+				convertToMultiline(question.getOption3()));
+		radioButtons[3].setText(
+				convertToMultiline(question.getOption4()));
 
-        instance.pack();
-        instance.setVisible(true);
-        return responseStatus;
-    }
+		if (question.getOption1().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 1;
+		} else if (question.getOption2().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 2;
+		} else if (question.getOption3().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 3;
+		} else if (question.getOption4().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 4;
+		}
 
-    /**
-     * Overload of the showQuestion method to include last question parameter
-     *
-     * @param frame    : JFrame representing the parent frame
-     * @param question : QuestionStub representing the question to be displayed
-     * @param isLastQuestion : boolean indicating whether displayed question
-     * is last question
-     * @return int : one of the three values representing student gave correct
-     *         answer, incorrect answer or gave up
-     */
-    public static int showQuestion(final JFrame frame,
-                                    final Question question,
-                                    final boolean isLastQuestion) {
+		instance.pack();
+		instance.setVisible(true);
+		return responseStatus;
+	}
 
-        if (instance == null) {
-            instance = new QuestionAttemptTemplate(frame);
-        }
-        
-        if(isLastQuestion) {
-            next.setText("Submit");
-        }
+	/**
+	 * Overload of the showQuestion method to include last question
+	 * parameter.
+	 *
+	 * @param frame          : JFrame representing the parent frame
+	 * @param question       : QuestionStub representing the question to be
+	 *                       displayed
+	 * @param isLastQuestion : boolean indicating whether displayed question
+	 * 						is last question
+	 * @return int : one of the three values representing student gave
+	 * 			correct answer, incorrect answer or gave up
+	*/
+	public static int showQuestion(final JFrame frame,
+			final Question question,
+			final boolean isLastQuestion) {
 
-        return showQuestion(frame, question);
-    }
+		if (instance == null) {
+			instance = new QuestionAttemptTemplate(frame);
+		}
 
-    /**
-     * Constructor to setup the main window.
-     *
-     * @param frame : JFrame representing the parent frame
-     */
-    private QuestionAttemptTemplate(final JFrame frame) {
+		if (isLastQuestion) {
+			next.setText("Submit");
+		}
 
-        super(frame, true);
+		return showQuestion(frame, question);
+	}
 
-        setTitle("Question");
+	/**
+	 * Constructor to setup the main window.
+	 *
+	 * @param frame : JFrame representing the parent frame
+	 */
+	private QuestionAttemptTemplate(final JFrame frame) {
 
-        responseStatus = INCORRECT_ANSWER;
+		super(frame, true);
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setTitle("Question");
 
-        this.setSize(600, 400);
-        this.setMinimumSize(this.getSize());
-        this.setMaximumSize(this.getSize());
+		responseStatus = INCORRECT_ANSWER;
 
-        JPanel mainPanel = setupPanel();
-        mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        this.getContentPane().add(mainPanel, BorderLayout.CENTER);
-        setResizable(false);
-        setLocationRelativeTo(frame);
-    }
+		this.setSize(500, 300);
+		this.setMinimumSize(this.getSize());
+		this.setMaximumSize(this.getSize());
 
-    /**
-     * Method to setup the main UI panel.
-     *
-     * @return JPanel : Panel containing all the UI components
-     */
-    private JPanel setupPanel() {
+		JPanel mainPanel = setupPanel();
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
+		this.getContentPane().add(mainPanel, BorderLayout.CENTER);
+		setResizable(false);
+		setLocationRelativeTo(frame);
+	}
 
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new Insets(0, 0, 10, 10);
-        gridBagConstraints.anchor = GridBagConstraints.NORTH;
-        gridBagConstraints.weighty = 0.3;
-        gridBagConstraints.weightx = 1;
+	/**
+	 * Method to setup the main UI panel.
+	 *
+	 * @return JPanel : Panel containing all the UI components
+	 */
+	private JPanel setupPanel() {
 
-        mainPanel.setMinimumSize(new Dimension(400, 600));
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new GridBagLayout());
+		mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
+		mainPanel.setBackground(BACKGROUND_COLOR);
 
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        questionDescription = new JLabel("");
+		GridBagConstraints gridBagConstraints
+			= new GridBagConstraints();
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.insets = new Insets(0, 0, 10, 10);
+		gridBagConstraints.anchor = GridBagConstraints.NORTH;
+		gridBagConstraints.weighty = 0.3;
+		gridBagConstraints.weightx = 1;
 
-        mainPanel.add(questionDescription, gridBagConstraints);
+		mainPanel.setMinimumSize(new Dimension(400, 600));
 
-        options = new ButtonGroup();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.anchor = GridBagConstraints.CENTER;
+		questionDescription = new JLabel("");
 
-        JPanel optionsPane = setupRadios();
+		mainPanel.add(questionDescription, gridBagConstraints);
 
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(optionsPane, gridBagConstraints);
+		JPanel optionsPane = setupRadios();
 
-        JPanel buttonPane = setupButtons();
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(optionsPane, gridBagConstraints);
 
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(buttonPane, gridBagConstraints);
+		JPanel buttonPane = setupButtons();
 
-        return mainPanel;
-    }
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.anchor = GridBagConstraints.CENTER;
+		mainPanel.add(buttonPane, gridBagConstraints);
 
-    /**
-     * This method adds radio buttons to the UI.
-     *
-     * @return JPanel : panel containing all the radio buttons
-     */
-    private JPanel setupRadios() {
+		return mainPanel;
+	}
 
-        JPanel optionsPane = new JPanel();
-        optionsPane.setOpaque(false);
-        optionsPane.setLayout(new GridBagLayout());
-        optionsPane.setBorder(BorderFactory.createTitledBorder(
-                            BorderFactory.createEtchedBorder(), "Options"));
+	/**
+	 * This method adds radio buttons to the UI.
+	 *
+	 * @return JPanel : panel containing all the radio buttons
+	 */
+	private JPanel setupRadios() {
 
-        option1 = new JRadioButton("");
-        options.add(option1);
-        option2 = new JRadioButton("");
-        options.add(option2);
-        option3 = new JRadioButton("");
-        options.add(option3);
-        option4 = new JRadioButton("");
-        options.add(option4);
+		JPanel optionsPane = new JPanel();
+		optionsPane.setOpaque(false);
+		optionsPane.setLayout(new GridBagLayout());
+		optionsPane.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEtchedBorder(), "Options"));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 0.25;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.LINE_START;
-        optionsPane.add(option1, gbc);
-        gbc.gridy++;
-        optionsPane.add(option2, gbc);
-        gbc.gridy++;
-        optionsPane.add(option3, gbc);
-        gbc.gridy++;
-        optionsPane.add(option4, gbc);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		gbc.weighty = 0.25;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_START;
 
-        return optionsPane;
+		radioButtons = new JRadioButton[4];
+		ButtonGroup options = new ButtonGroup();
+		for (int i = 0; i <= 3; i++, gbc.gridy++) {
+			radioButtons[i] = new JRadioButton("");
+			radioButtons[i].setOpaque(false);
+			options.add(radioButtons[i]);
+			optionsPane.add(radioButtons[i], gbc);
+		}
+		radioButtons[0].setSelected(true);
 
-    }
+		return optionsPane;
+	}
 
-    /**
-     * This method adds event listeners to both the buttons.
-     *
-     * @return JPanel : panel containing the next and giveup button
-     */
-    private JPanel setupButtons() {
+	/**
+	 * This method adds event listeners to both the buttons.
+	 *
+	 * @return JPanel : panel containing the 'next' and 'give up' button
+	 */
+	private JPanel setupButtons() {
 
-        JPanel buttonPane = new JPanel(new GridLayout(1, 2, 15, 15));
+		JPanel buttonPane = new JPanel(new GridLayout(1, 2, 15, 15));
+		buttonPane.setOpaque(false);
 
-        next = new JButton("Next");
-        giveup = new JButton("Give Up !");
+		next = new JButton("Next");
+		JButton giveup = new JButton("Give Up !");
 
-        next.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                responseStatus = INCORRECT_ANSWER;
-                switch (correctAnswer) {
-                case 1:
-                    if (option1.isSelected()) {
-                        responseStatus = CORRECT_ANSWER;
-                    }
-                    break;
-                case 2:
-                    if (option2.isSelected()) {
-                        responseStatus = CORRECT_ANSWER;
-                    }
-                    break;
-                case 3:
-                    if (option3.isSelected()) {
-                        responseStatus = CORRECT_ANSWER;
-                    }
-                    break;
-                case 4:
-                    if (option4.isSelected()) {
-                        responseStatus = CORRECT_ANSWER;
-                    }
-                    break;
-                default:
-                    responseStatus = INCORRECT_ANSWER;
-                }
-                clearAndHide();
-            }
-        });
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				responseStatus = INCORRECT_ANSWER;
+				switch (correctAnswer) {
+				case 1:
+					if (radioButtons[0].isSelected()) {
+						responseStatus = CORRECT_ANSWER;
+					}
+					break;
+				case 2:
+					if (radioButtons[1].isSelected()) {
+						responseStatus = CORRECT_ANSWER;
+					}
+					break;
+				case 3:
+					if (radioButtons[2].isSelected()) {
+						responseStatus = CORRECT_ANSWER;
+					}
+					break;
+				case 4:
+					if (radioButtons[3].isSelected()) {
+						responseStatus = CORRECT_ANSWER;
+					}
+					break;
+				default:
+					responseStatus = INCORRECT_ANSWER;
+				}
+				clearAndHide();
+			}
+		});
 
-        giveup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                responseStatus = GAVE_UP;
-                clearAndHide();
-            }
-        });
+		giveup.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				responseStatus = GAVE_UP;
+				clearAndHide();
+			}
+		});
 
-        buttonPane.add(next);
-        buttonPane.add(giveup);
+		buttonPane.add(next);
+		buttonPane.add(giveup);
 
-        return buttonPane;
-    }
+		return buttonPane;
+	}
 
-    /** This method clears the dialog and hides it. */
-    public void clearAndHide() {
-        options.clearSelection();
-        next.setText("Next");
-        setVisible(false);
-    }
+	/** This method clears the dialog and hides it. */
+	public void clearAndHide() {
+		radioButtons[0].setSelected(true);
+		next.setText("Next");
+		setVisible(false);
+	}
 
-    private static String convertToMultiline(final String orig) {
-        return "<html>" + orig.replaceAll("\n", "<br>");
-    }
+	/**
+	 * Utility function to convert text into HTML text.
+	 *
+	 * @param orig : String to be converted
+	 * @return String : HTML formatted string
+	 */
+	private static String convertToMultiline(final String orig) {
+		return "<html>" + orig.replaceAll("\n", "<br>");
+	}
 }

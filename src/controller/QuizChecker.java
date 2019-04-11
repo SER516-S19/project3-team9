@@ -1,10 +1,13 @@
 package src.controller;
 
+
 import java.awt.Container;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import javax.swing.JFrame;
+
 import src.model.Question;
 import src.model.Quiz;
 import src.utility.QuizReader;
@@ -36,24 +39,24 @@ public class QuizChecker {
 		quiz_title = new SelectQuizTitle(this);
 		showScreen(quiz_title);
 	}
-	
+
 	/**
-	 * send the questions to the template,and show the view 
-	 * until the question list is empty or student gives up.
+	 * send the questions to the template,and show the view until the question list
+	 * is empty or student gives up.
 	 */
-	public void sendQuestions(){
-		if(!questions.isEmpty()) {
+	public void sendQuestions() {
+		if (!questions.isEmpty()) {
 			Question question = questions.poll();
 			int flag = -1;
-			if(questions.size()==0) {
-				flag = QuestionAttemptTemplate.showQuestion(frame, question,true);
+			if (questions.size() == 0) {
+				flag = QuestionAttemptTemplate.showQuestion(frame, question, true);
 			} else {
-				 flag = QuestionAttemptTemplate.showQuestion(frame, question);
+				flag = QuestionAttemptTemplate.showQuestion(frame, question);
 			}
-			
-			if(flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
+
+			if (flag == QuestionAttemptTemplate.CORRECT_ANSWER) {
 				sendQuestions();
-			} else if(flag == QuestionAttemptTemplate.INCORRECT_ANSWER){
+			} else if (flag == QuestionAttemptTemplate.INCORRECT_ANSWER) {
 				questions.add(question);
 				sendQuestions();
 			} else if(flag == QuestionAttemptTemplate.GAVE_UP) {
@@ -66,7 +69,7 @@ public class QuizChecker {
 			showScreen(quiz_end);
 		}
 	}
-	
+  
 	/**
 	 * show the specific screen
 	 * @param screen the screen name that you want to show up.
@@ -77,20 +80,20 @@ public class QuizChecker {
 	}
 	
 	/**
-	 * This method get the selected quiz title from the QuizTitle class,
-	 * and then get the quiz object based on the quiz title.
-	 * Then, it will initialize the questions queue from quiz object
-	 * and send this questions queue to the Question template.
+	 * This method get the selected quiz title from the QuizTitle class, and then
+	 * get the quiz object based on the quiz title. Then, it will initialize the
+	 * questions queue from quiz object and send this questions queue to the
+	 * Question template.
 	 * 
 	 * @param title it will be sent by the QuizTitle class
 	 */
-	public void selectedTitle(String title) {
+	public void selectedTitle(String title, String folderPath) {
 		frame.setVisible(false);
 		questions.clear();
 		try {
-			Quiz quiz = quiz_reader.readQuiz(title);
+			Quiz quiz = quiz_reader.readQuiz(title, folderPath);
 			ArrayList<Question> question_list = quiz.getQuestions();
-			for(Question q : question_list) {
+			for (Question q : question_list) {
 				questions.add(q);
 			}
 			sendQuestions();
@@ -99,9 +102,9 @@ public class QuizChecker {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 *  return to the select title screen.
+	 * return to the select title screen.
 	 */
 	public void returnToTitle() {
 		frame.remove(quiz_end);
@@ -110,6 +113,7 @@ public class QuizChecker {
 
 	/**
 	 * get the quiz's title.
+	 * 
 	 * @return the quiz's titles get from quizReader
 	 */
 	public ArrayList<String> getQuizzes() {
