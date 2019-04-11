@@ -1,6 +1,8 @@
 package src.controller;
 
 
+import java.awt.Component;
+import java.awt.Container;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -8,6 +10,7 @@ import javax.swing.JFrame;
 import src.model.Question;
 import src.model.Quiz;
 import src.utility.QuizReader;
+import src.view.EndOfTheQuiz;
 import src.view.QuestionAttemptTemplate;
 import src.view.QuizList;
 import src.view.SelectQuizTitle;;
@@ -26,6 +29,7 @@ public class QuizChecker {
 	private ArrayList<String> quizzes;
 	private LinkedBlockingQueue<Question> questions;
 	private SelectQuizTitle quiz_title;
+	private EndOfTheQuiz quiz_end;
 	private QuizReader quiz_reader;
 	private QuizList quiz_list;
 	private JFrame frame;
@@ -36,7 +40,9 @@ public class QuizChecker {
 		quiz_reader = qr;
 		this.frame = frame;
 		questions = new LinkedBlockingQueue<Question>();
-		quiz_title = new SelectQuizTitle(frame,this);
+		quiz_end = new EndOfTheQuiz(this);
+		quiz_title = new SelectQuizTitle(this);
+		showScreen(quiz_title);
 	}
 	
 	/**
@@ -59,12 +65,25 @@ public class QuizChecker {
 				questions.add(question);
 				sendQuestions();
 			} else if(flag == QuestionAttemptTemplate.GAVE_UP) {
+				frame.remove(quiz_title);
+				showScreen(quiz_end);
 				frame.setVisible(true);
-				quiz_title.Show();
 			}
+		} else {
+			frame.remove(quiz_title);
+			showScreen(quiz_end);
 		}
 	}
-  
+	
+	/**
+	 * show the specific screen
+	 * @param screen the screen name that you want to show up.
+	 */
+	public void showScreen(Container screen) {
+		frame.setContentPane(screen);
+		frame.revalidate();
+	}
+	
 	/**
 	 * This method get the selected quiz title from the QuizTitle class,
 	 * and then get the quiz object based on the quiz title.
@@ -93,7 +112,9 @@ public class QuizChecker {
 	 *  return to the select title screen.
 	 */
 	public void returnToTitle() {
-		quiz_title.Show();
+		System.out.println("11");
+		frame.remove(quiz_end);
+		showScreen(quiz_title);
 	}
 
 	/**

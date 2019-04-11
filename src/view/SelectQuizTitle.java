@@ -17,19 +17,16 @@ import java.awt.event.ActionListener;
  * @author Shashidhar Reddy Vanteru,Jiayan Wang
  * 
  */
-public class SelectQuizTitle {
-	private JPanel quizpanel;
+public class SelectQuizTitle extends JPanel{
 	private JFrame quiz;
 	
-	public SelectQuizTitle(JFrame quiz, QuizChecker Qc) {
-		quizpanel = new JPanel();
-		this.quiz = quiz;
-		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
-		quizpanel.setSize(500, 500);
+	public SelectQuizTitle(QuizChecker Qc) {
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		this.setSize(500, 500);
 
 		JLabel message = new JLabel("Select the quiz from choices");
 		message.setAlignmentX(Component.CENTER_ALIGNMENT);
-		quizpanel.add(message);
+		this.add(message);
 
 		String[] choices = Qc.getQuizzes().toArray(new String[0]);
 
@@ -37,11 +34,11 @@ public class SelectQuizTitle {
 
 		menu.setMaximumSize(menu.getPreferredSize());
 		menu.setAlignmentX(Component.CENTER_ALIGNMENT);
-		quizpanel.add(menu);
+		this.add(menu);
 
 		JButton btn = new JButton("OK");
 		btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		quizpanel.add(btn);
+		this.add(btn);
     
 		btn.addActionListener(new ActionListener() {
 
@@ -51,15 +48,5 @@ public class SelectQuizTitle {
 			}
 		});
 		
-		Show();
-	}
-	
-	/**
-	 * add this screen to the frame,
-	 * and this screen can also show it again after controller called.
-	 */
-	public void Show() {
-		quiz.add(quizpanel);
-		quiz.validate();
 	}
 }
