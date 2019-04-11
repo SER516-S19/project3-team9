@@ -18,9 +18,12 @@ import java.awt.event.ActionListener;
  * 
  */
 public class SelectQuizTitle {
-
+	private JPanel quizpanel;
+	private JFrame quiz;
+	
 	public SelectQuizTitle(JFrame quiz, QuizChecker Qc) {
-		JPanel quizpanel = new JPanel();
+		quizpanel = new JPanel();
+		this.quiz = quiz;
 		quizpanel.setLayout(new BoxLayout(quizpanel, BoxLayout.Y_AXIS));
 		quizpanel.setSize(500, 500);
 
@@ -43,13 +46,19 @@ public class SelectQuizTitle {
 		btn.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("OK");
 				String x = String.valueOf(menu.getSelectedItem());
 				Qc.selectedTitle(x);
-
 			}
 		});
 		
+		Show();
+	}
+	
+	/**
+	 * add this screen to the frame,
+	 * and this screen can also show it again after controller called.
+	 */
+	public void Show() {
 		quiz.add(quizpanel);
 		quiz.validate();
 	}

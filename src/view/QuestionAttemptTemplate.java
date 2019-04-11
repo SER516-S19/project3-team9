@@ -1,6 +1,7 @@
 package src.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,33 +22,32 @@ import javax.swing.border.EmptyBorder;
 import src.model.Question;
 
 /**
- * Form to show a question and navaigation buttion and to give user
+ * Form to show a question and navigation button and to give user
  * functionality to select one of the options.
  *
  * @author Sarthak Tiwari
- * @version 1.0
+ * @version 2.0
  */
 public final class QuestionAttemptTemplate extends JDialog {
 
+	/** Instance of this class to maintain singleton pattern. */
     private static QuestionAttemptTemplate instance = null;
 
     private static JLabel questionDescription;
 
-    private static JRadioButton option1;
-    private static JRadioButton option2;
-    private static JRadioButton option3;
-    private static JRadioButton option4;
-    private static ButtonGroup options;
+    private static JRadioButton[] radioButtons;
 
     private static JButton next;
-    private static JButton giveup;
 
     private static short correctAnswer = 0;
     private static int responseStatus;
 
+    private static final Color BACKGROUND_COLOR = new Color(217, 225, 242);
+
     public static final int CORRECT_ANSWER = 0;
     public static final int INCORRECT_ANSWER = 1;
     public static final int GAVE_UP = -1;
+
 
     /**
      * public method to show the view.
@@ -65,11 +65,11 @@ public final class QuestionAttemptTemplate extends JDialog {
         }
 
         questionDescription.setText(
-                    convertToMultiline(question.getDescription()));
-        option1.setText(convertToMultiline(question.getOption1()));
-        option2.setText(convertToMultiline(question.getOption2()));
-        option3.setText(convertToMultiline(question.getOption3()));
-        option4.setText(convertToMultiline(question.getOption4()));
+                    convertToMultiline(question.getTitle()));
+        radioButtons[0].setText(convertToMultiline(question.getOption1()));
+        radioButtons[1].setText(convertToMultiline(question.getOption2()));
+        radioButtons[2].setText(convertToMultiline(question.getOption3()));
+        radioButtons[3].setText(convertToMultiline(question.getOption4()));
 
         correctAnswer = question.getCorrectOption();
 
@@ -79,7 +79,7 @@ public final class QuestionAttemptTemplate extends JDialog {
     }
 
     /**
-     * Overload of the showQuestion method to include last question parameter
+     * Overload of the showQuestion method to include last question parameter.
      *
      * @param frame    : JFrame representing the parent frame
      * @param question : QuestionStub representing the question to be displayed
@@ -95,8 +95,8 @@ public final class QuestionAttemptTemplate extends JDialog {
         if (instance == null) {
             instance = new QuestionAttemptTemplate(frame);
         }
-        
-        if(isLastQuestion) {
+
+        if (isLastQuestion) {
             next.setText("Submit");
         }
 
@@ -118,12 +118,11 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        this.setSize(600, 400);
+        this.setSize(500, 300);
         this.setMinimumSize(this.getSize());
         this.setMaximumSize(this.getSize());
 
         JPanel mainPanel = setupPanel();
-        mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
 
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
         setResizable(false);
@@ -139,6 +138,8 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
+        mainPanel.setBackground(BACKGROUND_COLOR);
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -151,11 +152,10 @@ public final class QuestionAttemptTemplate extends JDialog {
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
         questionDescription = new JLabel("");
 
         mainPanel.add(questionDescription, gridBagConstraints);
-
-        options = new ButtonGroup();
 
         JPanel optionsPane = setupRadios();
 
@@ -187,15 +187,6 @@ public final class QuestionAttemptTemplate extends JDialog {
         optionsPane.setBorder(BorderFactory.createTitledBorder(
                             BorderFactory.createEtchedBorder(), "Options"));
 
-        option1 = new JRadioButton("");
-        options.add(option1);
-        option2 = new JRadioButton("");
-        options.add(option2);
-        option3 = new JRadioButton("");
-        options.add(option3);
-        option4 = new JRadioButton("");
-        options.add(option4);
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -203,29 +194,32 @@ public final class QuestionAttemptTemplate extends JDialog {
         gbc.weighty = 0.25;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LINE_START;
-        optionsPane.add(option1, gbc);
-        gbc.gridy++;
-        optionsPane.add(option2, gbc);
-        gbc.gridy++;
-        optionsPane.add(option3, gbc);
-        gbc.gridy++;
-        optionsPane.add(option4, gbc);
+
+        radioButtons = new JRadioButton[4];
+        ButtonGroup options = new ButtonGroup();
+        for (int i = 0; i <= 3; i++, gbc.gridy++) {
+        	radioButtons[i] = new JRadioButton("");
+        	radioButtons[i].setOpaque(false);
+        	options.add(radioButtons[i]);
+        	optionsPane.add(radioButtons[i], gbc);
+        }
+        radioButtons[0].setSelected(true);
 
         return optionsPane;
-
     }
 
     /**
      * This method adds event listeners to both the buttons.
      *
-     * @return JPanel : panel containing the next and giveup button
+     * @return JPanel : panel containing the 'next' and 'give up' button
      */
     private JPanel setupButtons() {
 
         JPanel buttonPane = new JPanel(new GridLayout(1, 2, 15, 15));
+        buttonPane.setOpaque(false);
 
         next = new JButton("Next");
-        giveup = new JButton("Give Up !");
+        JButton giveup = new JButton("Give Up !");
 
         next.addActionListener(new ActionListener() {
             @Override
@@ -233,22 +227,22 @@ public final class QuestionAttemptTemplate extends JDialog {
                 responseStatus = INCORRECT_ANSWER;
                 switch (correctAnswer) {
                 case 1:
-                    if (option1.isSelected()) {
+                    if (radioButtons[0].isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 2:
-                    if (option2.isSelected()) {
+                    if (radioButtons[1].isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 3:
-                    if (option3.isSelected()) {
+                    if (radioButtons[2].isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
                 case 4:
-                    if (option4.isSelected()) {
+                    if (radioButtons[3].isSelected()) {
                         responseStatus = CORRECT_ANSWER;
                     }
                     break;
@@ -275,11 +269,17 @@ public final class QuestionAttemptTemplate extends JDialog {
 
     /** This method clears the dialog and hides it. */
     public void clearAndHide() {
-        options.clearSelection();
+    	radioButtons[0].setSelected(true);
         next.setText("Next");
         setVisible(false);
     }
 
+    /**
+     * Utility function to convert text into HTML text.
+     *
+     * @param orig : String to be converted
+     * @return String : HTML formatted string
+     */
     private static String convertToMultiline(final String orig) {
         return "<html>" + orig.replaceAll("\n", "<br>");
     }
