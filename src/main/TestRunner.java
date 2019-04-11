@@ -32,6 +32,5 @@ public class TestRunner {
         QuizReader qr = new QuizReader();
         QuizList qlist = new QuizList();
         QuizChecker q = new QuizChecker(qr,f,qlist);
-        q.run();
     }
 }
