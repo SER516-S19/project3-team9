@@ -62,22 +62,13 @@ public class QuizReader {
 			Question question = new Question();
 			QuestionJson json = quizJson.questions.get(i);
 
-			question.setDescription(json.title);
+			question.setTitle(json.title);
 			question.setOption1(json.options.get(0));
 			question.setOption2(json.options.get(1));
 			question.setOption3(json.options.get(2));
 			question.setOption4(json.options.get(3));
-
-			if (json.correctAnswer.equals(question.getOption1()))
-				question.setCorrectOption((short) 1);
-			else if (json.correctAnswer.equals(question.getOption2()))
-				question.setCorrectOption((short) 2);
-			else if (json.correctAnswer.equals(question.getOption3()))
-				question.setCorrectOption((short) 3);
-			else if (json.correctAnswer.equals(question.getOption4()))
-				question.setCorrectOption((short) 4);
-			else
-				question.setCorrectOption((short) 0);
+			
+			question.setCorrectOption(json.correctAnswer);
 
 			questionList.add(question);
 		}

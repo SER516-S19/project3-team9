@@ -52,24 +52,43 @@ public final class QuestionAttemptTemplate extends JDialog {
 	/**
 	 * public method to show the view.
 	 *
-	 * @param frame    : JFrame representing the parent frame
-	 * @param question : QuestionStub representing the question to be displayed
-	 * @return int : one of the three values representing student gave correct
-	 *         answer, incorrect answer or gave up
+	 * @param frame : JFrame representing the parent frame
+	 * @param question : QuestionStub representing the question to be
+	 * displayed
+	 * @return int : one of the three values representing student gave
+	 * correct answer, incorrect answer or gave up
 	 */
-	public static int showQuestion(final JFrame frame, final Question question) {
+	public static int showQuestion(final JFrame frame,
+			final Question question) {
 
 		if (instance == null) {
 			instance = new QuestionAttemptTemplate(frame);
 		}
 
-		questionDescription.setText(convertToMultiline(question.getTitle()));
-		radioButtons[0].setText(convertToMultiline(question.getOption1()));
-		radioButtons[1].setText(convertToMultiline(question.getOption2()));
-		radioButtons[2].setText(convertToMultiline(question.getOption3()));
-		radioButtons[3].setText(convertToMultiline(question.getOption4()));
+		questionDescription.setText(
+				convertToMultiline(question.getTitle()));
+		radioButtons[0].setText(
+				convertToMultiline(question.getOption1()));
+		radioButtons[1].setText(
+				convertToMultiline(question.getOption2()));
+		radioButtons[2].setText(
+				convertToMultiline(question.getOption3()));
+		radioButtons[3].setText(
+				convertToMultiline(question.getOption4()));
 
-		correctAnswer = question.getCorrectOption();
+		if (question.getOption1().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 1;
+		} else if (question.getOption2().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 2;
+		} else if (question.getOption3().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 3;
+		} else if (question.getOption4().equals(
+				question.getCorrectOption())) {
+			correctAnswer = 4;
+		}
 
 		instance.pack();
 		instance.setVisible(true);
@@ -77,17 +96,20 @@ public final class QuestionAttemptTemplate extends JDialog {
 	}
 
 	/**
-	 * Overload of the showQuestion method to include last question parameter.
+	 * Overload of the showQuestion method to include last question
+	 * parameter.
 	 *
 	 * @param frame          : JFrame representing the parent frame
 	 * @param question       : QuestionStub representing the question to be
 	 *                       displayed
-	 * @param isLastQuestion : boolean indicating whether displayed question is last
-	 *                       question
-	 * @return int : one of the three values representing student gave correct
-	 *         answer, incorrect answer or gave up
-	 */
-	public static int showQuestion(final JFrame frame, final Question question, final boolean isLastQuestion) {
+	 * @param isLastQuestion : boolean indicating whether displayed question
+	 * 						is last question
+	 * @return int : one of the three values representing student gave
+	 * 			correct answer, incorrect answer or gave up
+	*/
+	public static int showQuestion(final JFrame frame,
+			final Question question,
+			final boolean isLastQuestion) {
 
 		if (instance == null) {
 			instance = new QuestionAttemptTemplate(frame);
@@ -138,7 +160,8 @@ public final class QuestionAttemptTemplate extends JDialog {
 		mainPanel.setBorder(new EmptyBorder(10, 10, 5, 5));
 		mainPanel.setBackground(BACKGROUND_COLOR);
 
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		GridBagConstraints gridBagConstraints
+			= new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.insets = new Insets(0, 0, 10, 10);
 		gridBagConstraints.anchor = GridBagConstraints.NORTH;
@@ -181,7 +204,8 @@ public final class QuestionAttemptTemplate extends JDialog {
 		JPanel optionsPane = new JPanel();
 		optionsPane.setOpaque(false);
 		optionsPane.setLayout(new GridBagLayout());
-		optionsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Options"));
+		optionsPane.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEtchedBorder(), "Options"));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
