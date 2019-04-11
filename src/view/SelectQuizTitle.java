@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
  * 
  */
 public class SelectQuizTitle extends JPanel{
-	private JFrame quiz;
 	
 	public SelectQuizTitle(QuizChecker Qc) {
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
