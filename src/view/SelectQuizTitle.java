@@ -51,14 +51,14 @@ public class SelectQuizTitle {
 			}
 		});
 		
-		Show();
+		show();
 	}
 	
 	/**
 	 * add this screen to the frame,
 	 * and this screen can also show it again after controller called.
 	 */
-	public void Show() {
+	public void show() {
 		quiz.add(quizpanel);
 		quiz.validate();
 	}
