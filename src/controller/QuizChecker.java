@@ -26,11 +26,13 @@ public class QuizChecker {
 	private EndOfTheQuiz quiz_end;
 	private QuizReader quiz_reader;
 	private JFrame frame;
+	private String folderpath;
 	
-	public QuizChecker(QuizReader qr,JFrame frame, QuizList qlist){
-		quizzes = qlist.readQuizList();
+	public QuizChecker(QuizReader qr,JFrame f, QuizList qlist,String path){
+		folderpath = path;
+		quizzes = qlist.readQuizList(folderpath);
 		quiz_reader = qr;
-		this.frame = frame;
+		frame = f;
 		questions = new LinkedBlockingQueue<Question>();
 		quiz_end = new EndOfTheQuiz(this);
 		quiz_title = new SelectQuizTitle(this);
@@ -88,7 +90,7 @@ public class QuizChecker {
 		frame.setVisible(false);
 		questions.clear();
 		try {
-			Quiz quiz = quiz_reader.readQuiz(title);
+			Quiz quiz = quiz_reader.readQuiz(title,folderpath);
 			ArrayList<Question> question_list = quiz.getQuestions();
 			for(Question q : question_list) {
 				questions.add(q);
