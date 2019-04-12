@@ -23,8 +23,7 @@ public class QuizReader {
 	/**
 	 * Constructor for the QuizReader class
 	 */
-	public QuizReader() {
-	}
+	public QuizReader() { }
 
 	/**
 	 * Reads question title, options, and correct answer from the specified quiz's
@@ -56,38 +55,12 @@ public class QuizReader {
 	private Quiz createQuiz(JsonReader reader, String quizName) throws IOException {
 		ArrayList<Question> questionList = new ArrayList<>();
 		Gson gson = new Gson();
-		QuizJson quizJson = gson.fromJson(reader, QuizJson.class);
+		Quiz quiz = gson.fromJson(reader, Quiz.class);
 
-		for (int i = 0; i < quizJson.questions.size(); i++) {
-			Question question = new Question();
-			QuestionJson json = quizJson.questions.get(i);
-
-			question.setTitle(json.title);
-			question.setOption1(json.options.get(0));
-			question.setOption2(json.options.get(1));
-			question.setOption3(json.options.get(2));
-			question.setOption4(json.options.get(3));
-			
-			question.setCorrectOption(json.correctAnswer);
-
+		for (int i = 0; i < quiz.getQuestions().size(); i++) {
+			Question question = quiz.getQuestions().get(i);
 			questionList.add(question);
 		}
 		return new Quiz(questionList);
-	}
-
-	/**
-	 * Dummy classes that can store the quiz JSON based on its format.
-	 */
-	private class QuizJson {
-		ArrayList<QuestionJson> questions = new ArrayList<>();
-	}
-
-	/**
-	 * Dummy classes that can store the questions JSON based on its format.
-	 */
-	private class QuestionJson {
-		String title;
-		ArrayList<String> options;
-		String correctAnswer;
 	}
 }
