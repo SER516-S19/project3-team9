@@ -66,6 +66,7 @@ public class QuizChecker {
 		} else {
 			frame.remove(quiz_title);
 			showScreen(quiz_end);
+			frame.setVisible(true);
 		}
 	}
 	
