@@ -1,6 +1,6 @@
 # project3-team9
 
-Please make sure to have the correct JSON file within the folder path you pass as parameter before starting the student app.
+Please make sure to have the correct JSON file within the folder path you pass as the FolderPath parameter before starting the Student app.
 
 ## Instruction to start the application. <br>
 Step 1: Download App.jar from git repository. <br>
